@@ -5,22 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ByteStore - Магазин цифровых товаров</title>
 
-    <!-- шрифт -->
-    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
-
-    <!-- bootstrap -->
+    <!-- bootstrap 5.3 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body {
-            font-family: 'Satoshi', sans-serif;
+        .nav-filter.active {
+            font-weight: 600;
+            color: #000 !important;
         }
     </style>
 </head>
 <body class="bg-light">
 
     <!-- шапка сайта -->
-    <nav class="navbar navbar-expand-lg bg-white border-bottom">
+    <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#">ByteStore</a>
             
@@ -31,22 +29,28 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Главная</a>
+                        <a class="nav-link nav-filter active" href="#" data-filter="all">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Игры</a>
+                        <a class="nav-link nav-filter" href="#" data-filter="games">Игры</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Программы</a>
+                        <a class="nav-link nav-filter" href="#" data-filter="programs">Программы</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Контакты</a>
+                        <a class="nav-link" href="#contacts" id="contactsNavBtn">Контакты</a>
                     </li>
                 </ul>
 
-                <div class="d-flex gap-2">
-                    <button class="btn btn-outline-secondary btn-sm" type="button">Корзина (0)</button>
-                    <button class="btn btn-dark btn-sm" type="button">Войти</button>
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-outline-secondary btn-sm" id="cartBtn" type="button" data-bs-toggle="modal" data-bs-target="#cartModal">
+                        Корзина (<span id="cartCount">0</span>)
+                    </button>
+                    <div id="authContainer">
+                        <button class="btn btn-dark btn-sm" id="loginNavBtn" type="button" data-bs-toggle="modal" data-bs-target="#authModal">
+                            Войти
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,57 +58,111 @@
 
     <!-- заголовок страницы -->
     <div class="container my-5 text-center">
-        <h1 class="h2 fw-bold">Каталог цифровых товаров</h1>
-        <p class="text-secondary">Лицензионные ключи активации с моментальной выдачей</p>
+        <h1 class="h2 fw-bold" id="pageTitle">Каталог цифровых товаров</h1>
+        <p class="text-secondary" id="pageSubtitle">Лицензионные ключи активации с моментальной выдачей</p>
     </div>
 
     <!-- список товаров -->
     <div class="container mb-5">
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="productsGrid">
             
             <!-- товар 1 -->
-            <div class="col">
+            <div class="col product-card-col" data-category="games">
                 <div class="card h-100 shadow-sm border-0">
                     <img src="img/cyberpunk.png" class="card-img-top p-2" alt="Cyberpunk 2077" style="height: 230px; object-fit: contain;">
                     <div class="card-body d-flex flex-column">
-                        <span class="badge bg-secondary mb-2 align-self-start">Игры / Steam</span>
-                        <h5 class="card-title fw-bold">Cyberpunk 2077</h5>
+                        <span class="badge bg-secondary align-self-start mb-2">Игры / Steam</span>
+                        <h5 class="card-title fw-bold mb-1">Cyberpunk 2077</h5>
+                        <div class="text-muted small mb-2" id="stock-1">В наличии: 3 шт.</div>
                         <p class="card-text text-secondary small flex-grow-1">Шпионский экшен в Найт-Сити с Киану Ривзом.</p>
                         <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
                             <span class="fw-bold fs-5">1 999 руб.</span>
-                            <button class="btn btn-dark btn-sm">Купить</button>
+                            <button class="btn btn-dark btn-sm btn-buy" data-id="1" data-name="Cyberpunk 2077" data-price="1999">В корзину</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- товар 2 -->
-            <div class="col">
+            <div class="col product-card-col" data-category="games">
                 <div class="card h-100 shadow-sm border-0">
                     <img src="img/eldenring.png" class="card-img-top p-2" alt="Elden Ring" style="height: 230px; object-fit: contain;">
                     <div class="card-body d-flex flex-column">
-                        <span class="badge bg-secondary mb-2 align-self-start">Игры / Steam</span>
-                        <h5 class="card-title fw-bold">Elden Ring</h5>
+                        <span class="badge bg-secondary align-self-start mb-2">Игры / Steam</span>
+                        <h5 class="card-title fw-bold mb-1">Elden Ring</h5>
+                        <div class="text-muted small mb-2" id="stock-2">В наличии: 2 шт.</div>
                         <p class="card-text text-secondary small flex-grow-1">Ролевая игра года в открытом мире от FromSoftware.</p>
                         <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
                             <span class="fw-bold fs-5">2 499 руб.</span>
-                            <button class="btn btn-dark btn-sm">Купить</button>
+                            <button class="btn btn-dark btn-sm btn-buy" data-id="2" data-name="Elden Ring" data-price="2499">В корзину</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- товар 3 -->
-            <div class="col">
+            <div class="col product-card-col" data-category="programs">
                 <div class="card h-100 shadow-sm border-0">
                     <img src="img/windows.jpg" class="card-img-top p-2" alt="Windows 11 Pro" style="height: 230px; object-fit: contain;">
                     <div class="card-body d-flex flex-column">
-                        <span class="badge bg-secondary mb-2 align-self-start">Программы / PC</span>
-                        <h5 class="card-title fw-bold">Windows 11 Pro</h5>
+                        <span class="badge bg-secondary align-self-start mb-2">Программы / PC</span>
+                        <h5 class="card-title fw-bold mb-1">Windows 11 Pro</h5>
+                        <div class="text-muted small mb-2" id="stock-3">В наличии: 4 шт.</div>
                         <p class="card-text text-secondary small flex-grow-1">Официальный бессрочный ключ для операционной системы.</p>
                         <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
                             <span class="fw-bold fs-5">890 руб.</span>
-                            <button class="btn btn-dark btn-sm">Купить</button>
+                            <button class="btn btn-dark btn-sm btn-buy" data-id="3" data-name="Windows 11 Pro" data-price="890">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- товар 4 -->
+            <div class="col product-card-col" data-category="games">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="img/gtav.jpg" class="card-img-top p-2" alt="Grand Theft Auto V" style="height: 230px; object-fit: contain;">
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary align-self-start mb-2">Игры / Steam</span>
+                        <h5 class="card-title fw-bold mb-1">Grand Theft Auto V</h5>
+                        <div class="text-muted small mb-2" id="stock-4">В наличии: 2 шт.</div>
+                        <p class="card-text text-secondary small flex-grow-1">Легендарный криминальный экшен в Лос-Сантосе от Rockstar Games.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                            <span class="fw-bold fs-5">1 499 руб.</span>
+                            <button class="btn btn-dark btn-sm btn-buy" data-id="4" data-name="Grand Theft Auto V" data-price="1499">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- товар 5 -->
+            <div class="col product-card-col" data-category="games">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="img/rdr2.jpg" class="card-img-top p-2" alt="Red Dead Redemption 2" style="height: 230px; object-fit: contain;">
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary align-self-start mb-2">Игры / Steam</span>
+                        <h5 class="card-title fw-bold mb-1">Red Dead Redemption 2</h5>
+                        <div class="text-muted small mb-2" id="stock-5">В наличии: 2 шт.</div>
+                        <p class="card-text text-secondary small flex-grow-1">Грандиозная история Артура Моргана и банды Ван дер Линде на Диком Западе.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                            <span class="fw-bold fs-5">1 999 руб.</span>
+                            <button class="btn btn-dark btn-sm btn-buy" data-id="5" data-name="Red Dead Redemption 2" data-price="1999">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- товар 6 -->
+            <div class="col product-card-col" data-category="programs">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="img/office.svg" class="card-img-top p-3" alt="Microsoft Office 2024" style="height: 230px; object-fit: contain;">
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary align-self-start mb-2">Программы / PC</span>
+                        <h5 class="card-title fw-bold mb-1">Microsoft Office 2024</h5>
+                        <div class="text-muted small mb-2" id="stock-6">В наличии: 3 шт.</div>
+                        <p class="card-text text-secondary small flex-grow-1">Пакет офисных программ: Word, Excel, PowerPoint с бессрочной лицензией.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                            <span class="fw-bold fs-5">1 290 руб.</span>
+                            <button class="btn btn-dark btn-sm btn-buy" data-id="6" data-name="Microsoft Office 2024" data-price="1290">В корзину</button>
                         </div>
                     </div>
                 </div>
@@ -113,13 +171,138 @@
         </div>
     </div>
 
-    <!-- подвал -->
-    <footer class="bg-white border-top py-4 text-center text-secondary small">
-        <div class="container">
-            <p class="mb-0">2026 ByteStore. Учебный проект.</p>
+    <!-- модальное окно авторизации и регистрации -->
+    <div class="modal fade" id="authModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="authModalTitle">Вход в аккаунт</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="authForm">
+                        <div class="mb-3">
+                            <label class="form-label small text-secondary">Логин</label>
+                            <input type="text" class="form-control" id="authLogin" placeholder="Введите логин" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-secondary">Пароль</label>
+                            <input type="password" class="form-control" id="authPassword" placeholder="Введите пароль" required>
+                        </div>
+                        <div id="authError" class="alert alert-danger py-2 small d-none"></div>
+                        <button type="submit" class="btn btn-dark w-100" id="authSubmitBtn">Войти</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="#" class="small text-secondary" id="authToggleLink">Нет аккаунта? Зарегистрироваться</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- модальное окно корзины -->
+    <div class="modal fade" id="cartModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Корзина</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cartEmpty" class="text-center py-4 text-secondary">
+                        <p class="mb-0">Ваша корзина пуста</p>
+                    </div>
+                    <ul class="list-group list-group-flush mb-3" id="cartList"></ul>
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top fw-bold">
+                        <span>Итого:</span>
+                        <span id="cartTotalPrice">0 руб.</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Продолжить покупки</button>
+                    <button type="button" class="btn btn-dark btn-sm" id="checkoutBtn" disabled>Оформить заказ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- модальное окно успешной покупки и выдачи ключа -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-3">
+                <div class="modal-body">
+                    <div class="mb-3 text-success">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+                        </svg>
+                    </div>
+                    <h5 class="fw-bold mb-2">Оплата прошла успешно!</h5>
+                    <p class="text-secondary small mb-3">Ваш цифровой ключ активации:</p>
+                    <div class="p-3 bg-light border rounded font-monospace fw-bold fs-5 text-dark mb-3" id="issuedKey">
+                        XXXX-XXXX-XXXX-XXXX
+                    </div>
+                    <p class="text-secondary small">Ключ моментально готов к активации.</p>
+                    <button type="button" class="btn btn-dark btn-sm w-100" data-bs-dismiss="modal">Отлично</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- модальное окно добавления ключей (для админа) -->
+    <div class="modal fade" id="adminModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Пополнение склада ключей</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="adminKeyForm">
+                        <div class="mb-3">
+                            <label class="form-label small text-secondary">Выберите товар</label>
+                            <select class="form-select form-select-sm" id="adminProductSelect">
+                                <option value="1">Cyberpunk 2077</option>
+                                <option value="2">Elden Ring</option>
+                                <option value="3">Windows 11 Pro</option>
+                                <option value="4">Grand Theft Auto V</option>
+                                <option value="5">Red Dead Redemption 2</option>
+                                <option value="6">Microsoft Office 2024</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-secondary">Код лицензионного ключа</label>
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control font-monospace" id="adminKeyCode" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+                                <button class="btn btn-outline-secondary" type="button" id="adminGenKeyBtn">Сгенерировать</button>
+                            </div>
+                        </div>
+                        <div id="adminSuccess" class="alert alert-success py-2 small d-none"></div>
+                        <div id="adminError" class="alert alert-danger py-2 small d-none"></div>
+                        <button type="submit" class="btn btn-dark btn-sm w-100" id="adminSubmitBtn">Добавить ключ в базу данных</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- подвал и блок контактов -->
+    <footer id="contacts" class="bg-white border-top py-5 text-secondary small">
+        <div class="container text-center">
+            <h5 class="fw-bold text-dark mb-2">ByteStore</h5>
+            <p class="text-secondary mb-3">Официальный магазин лицензионных цифровых ключей</p>
+            <div class="d-inline-flex flex-column flex-sm-row gap-3 text-secondary mb-4">
+                <span>Поддержка: <strong class="text-dark">support@bytestore.local</strong></span>
+                <span>Telegram: <strong class="text-dark">@bytestore_help</strong></span>
+                <span>Режим работы: <strong class="text-dark">24/7</strong></span>
+            </div>
+            <div class="pt-3 border-top text-muted">
+                <p class="mb-0">ByteStore. Учебная практика.</p>
+            </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js?v=4"></script>
 </body>
 </html>
