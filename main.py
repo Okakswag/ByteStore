@@ -43,12 +43,12 @@ def get_db():
 # главная страница сайта
 @app.get("/")
 def read_root():
-    return FileResponse("index.html")
+    return FileResponse("index.html", headers={"Cache-Control": "no-cache, no-store, must-revalidate"})
 
 # скрипт фронтенда
 @app.get("/app.js")
 def read_js():
-    return FileResponse("app.js")
+    return FileResponse("app.js", headers={"Cache-Control": "no-cache, no-store, must-revalidate"})
 
 # вход в аккаунт
 @app.post("/api/login")
@@ -108,7 +108,7 @@ def get_products(db: Session = Depends(get_db)):
 
 # покупка товара и списание ключа из базы данных
 @app.post("/api/buy/{product_id}")
-def buy_product(product_id: int, db: Session = Depends(get_db)):
+def buy_product(product_id: int, user_id: int = None, db: Session = Depends(get_db)):
     # поиск первого свободного ключа
     key = db.query(DigitalKey).filter(
         DigitalKey.product_id == product_id,
@@ -118,8 +118,10 @@ def buy_product(product_id: int, db: Session = Depends(get_db)):
     if not key:
         raise HTTPException(status_code=400, detail="Ключи для этого товара закончились")
 
-    # смена статуса на продан
+    # смена статуса на продан и привязка к покупателю
     key.is_sold = True
+    if user_id:
+        key.user_id = user_id
     db.commit()
 
     return {
@@ -127,6 +129,21 @@ def buy_product(product_id: int, db: Session = Depends(get_db)):
         "product_id": product_id,
         "key_code": key.key_code
     }
+
+# просмотр купленных ключей пользователя (Личный кабинет по ТЗ)
+@app.get("/api/user/{user_id}/keys")
+def get_user_keys(user_id: int, db: Session = Depends(get_db)):
+    keys = db.query(DigitalKey).filter(DigitalKey.user_id == user_id).all()
+    result = []
+    for k in keys:
+        prod = db.query(Product).filter(Product.id == k.product_id).first()
+        result.append({
+            "key_code": k.key_code,
+            "product_name": prod.name if prod else "Товар",
+            "price": float(prod.price) if prod else 0,
+            "platform": prod.platform if prod else "PC"
+        })
+    return result
 
 # пополнение склада ключей администратором
 @app.post("/api/admin/add-key")

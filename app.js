@@ -2,6 +2,7 @@
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
 let isRegisterMode = false;
+let currentCategory = 'all';
 
 // инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
@@ -59,6 +60,14 @@ function setupEventListeners() {
 
             const filter = link.getAttribute('data-filter');
             filterProducts(filter);
+
+            // если выбрана категория, плавно скроллим к каталогу
+            if (filter !== 'all') {
+                const catalogEl = document.getElementById('catalog');
+                if (catalogEl) {
+                    catalogEl.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
         });
     });
 
@@ -72,6 +81,30 @@ function setupEventListeners() {
                 contactsSection.scrollIntoView({ behavior: 'smooth' });
             }
         });
+    }
+
+    // плавный скролл к частым вопросам (FAQ)
+    const faqBtn = document.getElementById('faqNavBtn');
+    if (faqBtn) {
+        faqBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const faqSection = document.getElementById('faq');
+            if (faqSection) {
+                faqSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+
+    // живой поиск товаров по названию
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', applyFilterAndSort);
+    }
+
+    // сортировка по цене
+    const sortSelect = document.getElementById('sortSelect');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', applyFilterAndSort);
     }
 
     // кнопки добавления в корзину в каталоге
@@ -226,6 +259,47 @@ async function handleAdminAddKey(e) {
     }
 }
 
+// загрузка купленных ключей пользователя (Личный кабинет по ТЗ 3.4)
+async function loadUserKeys() {
+    if (!currentUser) return;
+
+    const listEl = document.getElementById('userKeysList');
+    const emptyEl = document.getElementById('userKeysEmpty');
+
+    if (!listEl) return;
+    listEl.innerHTML = '';
+
+    try {
+        const response = await fetch(`/api/user/${currentUser.id}/keys`);
+        if (!response.ok) return;
+
+        const keys = await response.json();
+
+        if (keys.length === 0) {
+            if (emptyEl) emptyEl.classList.remove('d-none');
+            return;
+        }
+
+        if (emptyEl) emptyEl.classList.add('d-none');
+
+        keys.forEach(k => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-center px-0 py-3';
+            li.innerHTML = `
+                <div>
+                    <div class="fw-bold mb-1">${k.product_name} <span class="badge bg-light text-secondary border ms-1 small">${k.platform}</span></div>
+                    <div class="font-monospace small bg-light p-1 px-2 rounded border d-inline-block text-dark fw-bold">${k.key_code}</div>
+                </div>
+                <button class="btn btn-outline-secondary btn-sm py-1 px-2" type="button" onclick="navigator.clipboard.writeText('${k.key_code}'); this.textContent='Скопировано ✓'; setTimeout(() => this.textContent='Копировать', 1000);">Копировать</button>
+            `;
+            listEl.appendChild(li);
+        });
+
+    } catch (err) {
+        console.error('Ошибка загрузки ключей пользователя:', err);
+    }
+}
+
 // обновление отображения пользователя в шапке
 function updateAuthUI() {
     const container = document.getElementById('authContainer');
@@ -236,6 +310,7 @@ function updateAuthUI() {
             container.innerHTML = `
                 <div class="d-flex align-items-center gap-2">
                     <span class="badge bg-dark fw-normal">${currentUser.login}</span>
+                    <button class="btn btn-outline-secondary btn-sm py-0 px-2" id="myKeysBtn" type="button" data-bs-toggle="modal" data-bs-target="#userKeysModal" style="font-size: 0.75rem;">Мои покупки</button>
                     <button class="btn btn-outline-primary btn-sm py-0 px-2" type="button" data-bs-toggle="modal" data-bs-target="#adminModal" style="font-size: 0.75rem;">+ Добавить ключи</button>
                     <button class="btn btn-outline-danger btn-sm py-0 px-2" id="logoutBtn" style="font-size: 0.75rem;">Выйти</button>
                 </div>
@@ -244,11 +319,14 @@ function updateAuthUI() {
             container.innerHTML = `
                 <div class="d-flex align-items-center gap-2">
                     <span class="small text-secondary fw-semibold">${currentUser.login}</span>
+                    <button class="btn btn-outline-secondary btn-sm py-0 px-2" id="myKeysBtn" type="button" data-bs-toggle="modal" data-bs-target="#userKeysModal" style="font-size: 0.75rem;">Мои покупки</button>
                     <button class="btn btn-outline-danger btn-sm py-0 px-2" id="logoutBtn" style="font-size: 0.75rem;">Выйти</button>
                 </div>
             `;
         }
         document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+        const myKeysBtn = document.getElementById('myKeysBtn');
+        if (myKeysBtn) myKeysBtn.addEventListener('click', loadUserKeys);
     } else {
         container.innerHTML = `
             <button class="btn btn-dark btn-sm" id="loginNavBtn" type="button" data-bs-toggle="modal" data-bs-target="#authModal">
@@ -299,9 +377,9 @@ async function loadStock() {
     }
 }
 
-// фильтрация карточек товаров
+// фильтрация карточек товаров по категориям из меню
 function filterProducts(category) {
-    const cards = document.querySelectorAll('.product-card-col');
+    currentCategory = category;
     const pageTitle = document.getElementById('pageTitle');
     const pageSubtitle = document.getElementById('pageSubtitle');
 
@@ -316,14 +394,66 @@ function filterProducts(category) {
         if (pageSubtitle) pageSubtitle.textContent = 'Лицензионные ключи активации с моментальной выдачей';
     }
 
+    applyFilterAndSort();
+}
+
+// применение живого поиска и сортировки по цене
+function applyFilterAndSort() {
+    const searchInput = document.getElementById('searchInput');
+    const sortSelect = document.getElementById('sortSelect');
+    const grid = document.getElementById('productsGrid');
+    const noProductsFound = document.getElementById('noProductsFound');
+
+    const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    const sortOrder = sortSelect ? sortSelect.value : 'default';
+
+    const cards = Array.from(document.querySelectorAll('.product-card-col'));
+    let visibleCount = 0;
+
+    // сортировка массива карточек
+    cards.sort((a, b) => {
+        const btnA = a.querySelector('.btn-buy');
+        const btnB = b.querySelector('.btn-buy');
+        const priceA = parseInt(btnA?.getAttribute('data-price') || '0', 10);
+        const priceB = parseInt(btnB?.getAttribute('data-price') || '0', 10);
+        const idA = parseInt(btnA?.getAttribute('data-id') || '0', 10);
+        const idB = parseInt(btnB?.getAttribute('data-id') || '0', 10);
+
+        if (sortOrder === 'price-asc') {
+            return priceA - priceB;
+        } else if (sortOrder === 'price-desc') {
+            return priceB - priceA;
+        } else {
+            return idA - idB;
+        }
+    });
+
+    // упорядочивание в контейнере и фильтрация по категории и строке поиска
     cards.forEach(card => {
+        if (grid) grid.appendChild(card);
+
         const itemCategory = card.getAttribute('data-category');
-        if (category === 'all' || itemCategory === category) {
+        const title = card.querySelector('.card-title')?.textContent.toLowerCase() || '';
+
+        const matchesCategory = (currentCategory === 'all' || itemCategory === currentCategory);
+        const matchesQuery = !query || title.includes(query);
+
+        if (matchesCategory && matchesQuery) {
             card.style.display = '';
+            visibleCount++;
         } else {
             card.style.display = 'none';
         }
     });
+
+    // сообщение, если ничего не найдено
+    if (noProductsFound) {
+        if (visibleCount === 0) {
+            noProductsFound.classList.remove('d-none');
+        } else {
+            noProductsFound.classList.add('d-none');
+        }
+    }
 }
 
 // добавление товара в корзину
@@ -424,8 +554,8 @@ async function handleCheckout() {
     const firstItem = cart[0];
 
     try {
-        // строгий запрос к fastapi бэкенду
-        const response = await fetch(`/api/buy/${firstItem.id}`, {
+        // строгий запрос к fastapi бэкенду с передачей id покупателя
+        const response = await fetch(`/api/buy/${firstItem.id}?user_id=${currentUser.id}`, {
             method: 'POST'
         });
 

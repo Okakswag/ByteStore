@@ -41,6 +41,7 @@ class DigitalKey(Base):
     product_id = Column(Integer, ForeignKey("products.id"))
     key_code = Column(String(100), nullable=False)
     is_sold = Column(Boolean, default=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
 
     product = relationship("Product", back_populates="keys")
 

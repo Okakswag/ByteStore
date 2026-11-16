@@ -5,10 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ByteStore - Магазин цифровых товаров</title>
 
+    <!-- шрифт satoshi -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
+
     <!-- bootstrap 5.3 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
+        body {
+            font-family: 'Satoshi', sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
         .nav-filter.active {
             font-weight: 600;
             color: #000 !important;
@@ -38,6 +47,9 @@
                         <a class="nav-link nav-filter" href="#" data-filter="programs">Программы</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#faq" id="faqNavBtn">Частые вопросы</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#contacts" id="contactsNavBtn">Контакты</a>
                     </li>
                 </ul>
@@ -56,15 +68,72 @@
         </div>
     </nav>
 
-    <!-- заголовок страницы -->
-    <div class="container my-5 text-center">
-        <h1 class="h2 fw-bold" id="pageTitle">Каталог цифровых товаров</h1>
-        <p class="text-secondary" id="pageSubtitle">Лицензионные ключи активации с моментальной выдачей</p>
+    <!-- главный промо-баннер (hero) -->
+    <section class="bg-dark text-white py-5 mb-5">
+        <div class="container py-4 text-center">
+            <span class="badge bg-secondary mb-3 px-3 py-2 text-uppercase fw-normal" style="letter-spacing: 1px;">Сезонная распродажа</span>
+            <h1 class="display-5 fw-bold mb-3">Цифровые ключи для игр и программ</h1>
+            <p class="lead text-secondary mx-auto mb-4" style="max-width: 650px;">
+                Моментальная автоматическая выдача сразу после оплаты. Официальные лицензии для Steam и ПК с бессрочной гарантией.
+            </p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#catalog" class="btn btn-light px-4 py-2 fw-semibold">Перейти в каталог</a>
+                <a href="#advantages" class="btn btn-outline-secondary text-white px-4 py-2">Наши гарантии</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- блок преимуществ -->
+    <section id="advantages" class="container mb-5">
+        <div class="row g-4 text-center">
+            <div class="col-12 col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4 bg-white">
+                    <div class="fs-2 mb-2">⚡</div>
+                    <h5 class="fw-bold mb-2">Моментальная выдача</h5>
+                    <p class="text-secondary small mb-0">Лицензионный ключ появляется на экране сразу после подтверждения заказа.</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4 bg-white">
+                    <div class="fs-2 mb-2">🔑</div>
+                    <h5 class="fw-bold mb-2">100% Лицензия</h5>
+                    <p class="text-secondary small mb-0">Все ключи закупаются напрямую у официальных издателей и дистрибьюторов.</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4 bg-white">
+                    <div class="fs-2 mb-2">💬</div>
+                    <h5 class="fw-bold mb-2">Поддержка 24/7</h5>
+                    <p class="text-secondary small mb-0">Оперативная помощь с активацией и ответами на вопросы в любое время суток.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- заголовок каталога и панель фильтрации -->
+    <div id="catalog" class="container mb-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center border-bottom pb-3 gap-3">
+            <div>
+                <h2 class="h3 fw-bold mb-1" id="pageTitle">Каталог товаров</h2>
+                <p class="text-secondary small mb-0" id="pageSubtitle">Лицензионные ключи активации с моментальной выдачей</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <input type="text" class="form-control form-control-sm" id="searchInput" placeholder="Поиск по названию..." style="max-width: 220px;">
+                <select class="form-select form-select-sm" id="sortSelect" style="max-width: 170px;">
+                    <option value="default">По умолчанию</option>
+                    <option value="price-asc">Сначала дешевле</option>
+                    <option value="price-desc">Сначала дороже</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <!-- список товаров -->
     <div class="container mb-5">
         <div class="row row-cols-1 row-cols-md-3 g-4" id="productsGrid">
+            <div id="noProductsFound" class="col-12 text-center py-5 text-secondary d-none">
+                <p class="mb-0">Товаров по вашему запросу не найдено</p>
+            </div>
             
             <!-- товар 1 -->
             <div class="col product-card-col" data-category="games">
@@ -168,6 +237,108 @@
                 </div>
             </div>
 
+            <!-- товар 7 -->
+            <div class="col product-card-col" data-category="games">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="img/witcher3.jpg" class="card-img-top p-2" alt="The Witcher 3: Wild Hunt" style="height: 230px; object-fit: contain;">
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary align-self-start mb-2">Игры / Steam</span>
+                        <h5 class="card-title fw-bold mb-1">The Witcher 3: Wild Hunt</h5>
+                        <div class="text-muted small mb-2" id="stock-7">В наличии: 2 шт.</div>
+                        <p class="card-text text-secondary small flex-grow-1">Культовая ролевая игра о ведьмаке Геральте из Ривии.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                            <span class="fw-bold fs-5">799 руб.</span>
+                            <button class="btn btn-dark btn-sm btn-buy" data-id="7" data-name="The Witcher 3: Wild Hunt" data-price="799">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- товар 8 -->
+            <div class="col product-card-col" data-category="games">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="img/forza6.jpg" class="card-img-top p-2" alt="Forza Horizon 6" style="height: 230px; object-fit: contain;">
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary align-self-start mb-2">Игры / Steam</span>
+                        <h5 class="card-title fw-bold mb-1">Forza Horizon 6</h5>
+                        <div class="text-muted small mb-2" id="stock-8">В наличии: 2 шт.</div>
+                        <p class="card-text text-secondary small flex-grow-1">Долгожданное продолжение легендарного гоночного фестиваля нового поколения.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                            <span class="fw-bold fs-5">2 999 руб.</span>
+                            <button class="btn btn-dark btn-sm btn-buy" data-id="8" data-name="Forza Horizon 6" data-price="2999">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- товар 9 -->
+            <div class="col product-card-col" data-category="games">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="img/hogwarts.jpg" class="card-img-top p-2" alt="Hogwarts Legacy" style="height: 230px; object-fit: contain;">
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary align-self-start mb-2">Игры / Steam</span>
+                        <h5 class="card-title fw-bold mb-1">Hogwarts Legacy</h5>
+                        <div class="text-muted small mb-2" id="stock-9">В наличии: 2 шт.</div>
+                        <p class="card-text text-secondary small flex-grow-1">Погрузитесь в мир магии Хогвартса конца XIX века с открытым миром.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                            <span class="fw-bold fs-5">2 199 руб.</span>
+                            <button class="btn btn-dark btn-sm btn-buy" data-id="9" data-name="Hogwarts Legacy" data-price="2199">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- товар 10 -->
+            <div class="col product-card-col" data-category="games">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="img/forza5.jpg" class="card-img-top p-2" alt="Forza Horizon 5" style="height: 230px; object-fit: contain;">
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary align-self-start mb-2">Игры / PC</span>
+                        <h5 class="card-title fw-bold mb-1">Forza Horizon 5</h5>
+                        <div class="text-muted small mb-2" id="stock-10">В наличии: 2 шт.</div>
+                        <p class="card-text text-secondary small flex-grow-1">Красочный гоночный симулятор в открытом мире фестиваля Мексики.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                            <span class="fw-bold fs-5">2 499 руб.</span>
+                            <button class="btn btn-dark btn-sm btn-buy" data-id="10" data-name="Forza Horizon 5" data-price="2499">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- товар 11 -->
+            <div class="col product-card-col" data-category="programs">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="img/photoshop.svg" class="card-img-top p-3" alt="Adobe Photoshop 2024" style="height: 230px; object-fit: contain;">
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary align-self-start mb-2">Программы / PC</span>
+                        <h5 class="card-title fw-bold mb-1">Adobe Photoshop 2024</h5>
+                        <div class="text-muted small mb-2" id="stock-11">В наличии: 3 шт.</div>
+                        <p class="card-text text-secondary small flex-grow-1">Мировой стандарт графического дизайна и обработки фотографий.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                            <span class="fw-bold fs-5">1 190 руб.</span>
+                            <button class="btn btn-dark btn-sm btn-buy" data-id="11" data-name="Adobe Photoshop 2024" data-price="1190">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- товар 12 -->
+            <div class="col product-card-col" data-category="programs">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="img/steam.svg" class="card-img-top p-3" alt="Подарочная карта Steam (1000 руб.)" style="height: 230px; object-fit: contain;">
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-secondary align-self-start mb-2">Программы / Steam</span>
+                        <h5 class="card-title fw-bold mb-1">Карта Steam (1 000 руб.)</h5>
+                        <div class="text-muted small mb-2" id="stock-12">В наличии: 3 шт.</div>
+                        <p class="card-text text-secondary small flex-grow-1">Мгновенный промокод для пополнения кошелька Steam на 1000 рублей.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                            <span class="fw-bold fs-5">1 090 руб.</span>
+                            <button class="btn btn-dark btn-sm btn-buy" data-id="12" data-name="Подарочная карта Steam (1000 руб.)" data-price="1090">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -249,7 +420,28 @@
         </div>
     </div>
 
-    <!-- модальное окно добавления ключей (для админа) -->
+    <!-- модальное окно личного кабинета (мои покупки по ТЗ 3.4) -->
+    <div class="modal fade" id="userKeysModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Мои купленные ключи</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="userKeysEmpty" class="text-center py-4 text-secondary">
+                        <p class="mb-0">У вас пока нет купленных ключей</p>
+                    </div>
+                    <ul class="list-group list-group-flush" id="userKeysList"></ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- модальное окно добавления ключей -->
     <div class="modal fade" id="adminModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -268,6 +460,12 @@
                                 <option value="4">Grand Theft Auto V</option>
                                 <option value="5">Red Dead Redemption 2</option>
                                 <option value="6">Microsoft Office 2024</option>
+                                <option value="7">The Witcher 3: Wild Hunt</option>
+                                <option value="8">Forza Horizon 6</option>
+                                <option value="9">Hogwarts Legacy</option>
+                                <option value="10">Forza Horizon 5</option>
+                                <option value="11">Adobe Photoshop 2024</option>
+                                <option value="12">Подарочная карта Steam (1000 руб.)</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -286,6 +484,71 @@
         </div>
     </div>
 
+    <!-- блок часто задаваемых вопросов (FAQ) -->
+    <section id="faq" class="container mb-5">
+        <div class="text-center mb-4">
+            <h2 class="h3 fw-bold mb-1">Часто задаваемые вопросы</h2>
+            <p class="text-secondary small mb-0">Ответы на популярные вопросы о покупке и активации ключей</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item border-0 mb-3 shadow-sm rounded overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                Как и когда я получу купленный ключ?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-secondary small pt-0">
+                                Выдача ключа происходит автоматически и моментально сразу после оформления заказа. Ключ появится во всплывающем окне на сайте, а также навсегда сохранится в вашем личном кабинете в разделе «Мои покупки».
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-3 shadow-sm rounded overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                Как активировать купленный ключ в Steam?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-secondary small pt-0">
+                                1. Запустите клиент Steam на вашем ПК и войдите в свой аккаунт.<br>
+                                2. В верхнем меню выберите <strong>«Игры»</strong> &rarr; <strong>«Активировать в Steam...»</strong>.<br>
+                                3. Следуйте инструкции на экране и вставьте полученный ключ.<br>
+                                4. После этого игра будет навсегда привязана к вашей библиотеке и готова к установке.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-3 shadow-sm rounded overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                Все ли ключи являются официальными и лицензионными?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-secondary small pt-0">
+                                Да, абсолютно все товары в нашем магазине — это 100% официальные лицензионные ключи от проверенных дистрибьюторов и издателей с бессрочной гарантией.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-3 shadow-sm rounded overflow-hidden">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                Что делать, если возникли сложности при активации?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-secondary small pt-0">
+                                Наша техническая поддержка работает круглосуточно. Вы можете связаться с нами в Telegram <strong>@bytestore_help</strong> или по электронной почте <strong>support@bytestore.local</strong>. Оператор ответит в течение нескольких минут и поможет активировать ключ.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- подвал и блок контактов -->
     <footer id="contacts" class="bg-white border-top py-5 text-secondary small">
         <div class="container text-center">
@@ -303,6 +566,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="app.js?v=4"></script>
+    <script src="app.js?v=7"></script>
 </body>
 </html>
