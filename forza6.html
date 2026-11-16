@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forza Horizon 6 — Купить лицензионный ключ Steam | ByteStore</title>
+    <!-- шрифты и стили -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .navbar-brand {
+            letter-spacing: -0.5px;
+        }
+        .badge-discount {
+            background-color: #dc3545;
+            font-size: 0.85rem;
+            padding: 0.35rem 0.65rem;
+        }
+        .feature-box {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .feature-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08) !important;
+        }
+        .specs-table th {
+            width: 35%;
+            font-weight: 600;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- навигационная панель -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4 d-flex align-items-center gap-2" href="/">
+                <span class="bg-dark text-white rounded px-2 py-1 fs-6">BS</span>
+                <span>ByteStore</span>
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fw-semibold" href="/#catalog">← Вернуться в каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Об игре</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#specs">Системные требования</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#activation">Активация</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacts">Контакты</a>
+                    </li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-outline-secondary btn-sm" id="cartBtn" type="button" data-bs-toggle="modal" data-bs-target="#cartModal">
+                        Корзина (<span id="cartCount">0</span>)
+                    </button>
+                    <div id="authContainer">
+                        <button class="btn btn-dark btn-sm" id="loginNavBtn" type="button" data-bs-toggle="modal" data-bs-target="#authModal">
+                            Войти
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- хлебные крошки -->
+    <div class="container py-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 small">
+                <li class="breadcrumb-item"><a href="/" class="text-secondary text-decoration-none">Главная</a></li>
+                <li class="breadcrumb-item"><a href="/#catalog" class="text-secondary text-decoration-none">Компьютерные игры</a></li>
+                <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Forza Horizon 6</li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- главный промо-блок игры -->
+    <section class="container mb-5" id="about">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white p-4 p-lg-5">
+            <div class="row g-4 align-items-center">
+                <!-- постер товара -->
+                <div class="col-12 col-lg-5 text-center">
+                    <div class="p-3 bg-light rounded-4 shadow-sm">
+                        <img src="img/forza6.jpg" alt="Forza Horizon 6" class="img-fluid rounded-3" style="max-height: 380px; object-fit: contain;">
+                    </div>
+                    <div class="d-flex justify-content-center gap-2 mt-3">
+                        <span class="badge bg-secondary">Steam</span>
+                        <span class="badge bg-dark">PC</span>
+                        <span class="badge bg-primary">12+</span>
+                        <span class="badge bg-light text-dark border">Русский текст</span>
+                    </div>
+                </div>
+
+                <!-- информация о товаре и кнопка покупки -->
+                <div class="col-12 col-lg-7">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge bg-danger text-white fw-semibold">Горячая новинка</span>
+                        <span class="badge badge-discount fw-semibold">-40%</span>
+                        <span class="text-secondary small">Мгновенная доставка</span>
+                    </div>
+
+                    <h1 class="display-6 fw-bold mb-2">Forza Horizon 6</h1>
+                    <p class="text-secondary lead fs-6 mb-4">
+                        Новая глава легендарного гоночного фестиваля Horizon переносит вас в Японию! Исследуйте ночной Токио, живописные горные перевалы Тогэ у горы Фудзи и скоростные автобаны за рулем сотен лучших машин мира.
+                    </p>
+
+                    <!-- параметры в виде сетки -->
+                    <div class="row g-2 mb-4 small text-secondary">
+                        <div class="col-6 col-sm-4">
+                            <span class="d-block text-muted">Жанр:</span>
+                            <strong class="text-dark">Гонки / Симулятор / Open-World</strong>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <span class="d-block text-muted">Разработчик:</span>
+                            <strong class="text-dark">Playground Games</strong>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <span class="d-block text-muted">Платформа:</span>
+                            <strong class="text-dark">Steam (Windows)</strong>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <span class="d-block text-muted">Язык:</span>
+                            <strong class="text-dark">Русские субтитры и меню</strong>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <span class="d-block text-muted">Регион:</span>
+                            <strong class="text-dark">РФ + Весь мир (Global)</strong>
+                        </div>
+                        <div class="col-6 col-sm-4">
+                            <span class="d-block text-muted">Наличие:</span>
+                            <strong class="text-success" id="stock-8">В наличии: 2 шт.</strong>
+                        </div>
+                    </div>
+
+                    <!-- блок цены и покупки -->
+                    <div class="p-3 bg-light rounded-3 border d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+                        <div>
+                            <div class="text-secondary small text-decoration-line-through">4 999 руб.</div>
+                            <div class="fw-bold fs-3 text-dark">2 999 руб.</div>
+                            <div class="text-muted small">Официальный цифровой ключ активации</div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-secondary btn-buy px-3" data-id="8" data-name="Forza Horizon 6" data-price="2999">
+                                В корзину
+                            </button>
+                            <button class="btn btn-dark px-4 fw-semibold" id="buyInstantBtn">
+                                Купить сейчас
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 text-secondary small d-flex gap-3">
+                        <span>⚡ Мгновенная выдача ключа</span>
+                        <span>🔑 Пожизненная лицензия</span>
+                        <span>🛡️ Гарантия возврата</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ключевые особенности игры -->
+    <section class="container mb-5">
+        <div class="text-center mb-4">
+            <h2 class="h4 fw-bold mb-1">Ключевые особенности игры</h2>
+            <p class="text-secondary small mb-0">Погрузитесь в атмосферу самого масштабного автофестиваля в истории</p>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm p-4 bg-white feature-box rounded-3 text-center">
+                    <div class="fs-2 mb-2">🌸</div>
+                    <h5 class="fw-bold fs-6 mb-2">Открытый мир Японии</h5>
+                    <p class="text-secondary small mb-0">От плотного трафика и неоновых огней кварталов Сибуя до цветущей сакуры, древних храмов Киото и священной горы Фудзи.</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm p-4 bg-white feature-box rounded-3 text-center">
+                    <div class="fs-2 mb-2">🏎️</div>
+                    <h5 class="fw-bold fs-6 mb-2">Культовые авто и JDM</h5>
+                    <p class="text-secondary small mb-0">Более 650 лицензированных автомобилей: культовые японские спорткары, легенды дрифта, гиперкары и внедорожники.</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm p-4 bg-white feature-box rounded-3 text-center">
+                    <div class="fs-2 mb-2">🌧️</div>
+                    <h5 class="fw-bold fs-6 mb-2">Динамические сезоны</h5>
+                    <p class="text-secondary small mb-0">Смена времен года в реальном времени: осенние тайфуны, весенние ливни и заснеженные зимние серпантины влияют на сцепление шин.</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm p-4 bg-white feature-box rounded-3 text-center">
+                    <div class="fs-2 mb-2">🔧</div>
+                    <h5 class="fw-bold fs-6 mb-2">Глубокий тюнинг и дрифт</h5>
+                    <p class="text-secondary small mb-0">Полная настройка подвески, угла выворота, давления турбины, установка оригинальных обвесов и состязания с игроками по всему миру.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- системные требования -->
+    <section class="container mb-5" id="specs">
+        <div class="text-center mb-4">
+            <h2 class="h4 fw-bold mb-1">Системные требования для ПК</h2>
+            <p class="text-secondary small mb-0">Проверьте соответствие характеристик вашего компьютера</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- минимальные -->
+            <div class="col-12 col-md-6">
+                <div class="card h-100 border-0 shadow-sm p-4 bg-white rounded-3">
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+                        <h5 class="fw-bold mb-0">Минимальные требования</h5>
+                        <span class="badge bg-secondary">1080p / 30 FPS / Средние</span>
+                    </div>
+                    <table class="table table-borderless small mb-0 specs-table">
+                        <tbody>
+                            <tr>
+                                <th>ОС:</th>
+                                <td>Windows 10 / 11 (64-бит)</td>
+                            </tr>
+                            <tr>
+                                <th>Процессор:</th>
+                                <td>Intel Core i5-8400 или AMD Ryzen 5 2600</td>
+                            </tr>
+                            <tr>
+                                <th>Оперативная память:</th>
+                                <td>16 ГБ ОЗУ</td>
+                            </tr>
+                            <tr>
+                                <th>Видеокарта:</th>
+                                <td>NVIDIA GeForce GTX 1660 Super (6 ГБ) или AMD Radeon RX 5600 XT</td>
+                            </tr>
+                            <tr>
+                                <th>DirectX:</th>
+                                <td>Версии 12 Ultimate</td>
+                            </tr>
+                            <tr>
+                                <th>Место на диске:</th>
+                                <td>110 ГБ свободного места на SSD</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- рекомендуемые -->
+            <div class="col-12 col-md-6">
+                <div class="card h-100 border-0 shadow-sm p-4 bg-white rounded-3">
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+                        <h5 class="fw-bold mb-0">Рекомендуемые требования</h5>
+                        <span class="badge bg-dark">1440p / 60+ FPS / Ультра</span>
+                    </div>
+                    <table class="table table-borderless small mb-0 specs-table">
+                        <tbody>
+                            <tr>
+                                <th>ОС:</th>
+                                <td>Windows 11 (64-бит)</td>
+                            </tr>
+                            <tr>
+                                <th>Процессор:</th>
+                                <td>Intel Core i7-13700K или AMD Ryzen 7 7800X3D</td>
+                            </tr>
+                            <tr>
+                                <th>Оперативная память:</th>
+                                <td>32 ГБ ОЗУ</td>
+                            </tr>
+                            <tr>
+                                <th>Видеокарта:</th>
+                                <td>NVIDIA GeForce RTX 4070 Ti (12 ГБ) или AMD Radeon RX 7900 XT</td>
+                            </tr>
+                            <tr>
+                                <th>DirectX:</th>
+                                <td>Версии 12 Ultimate</td>
+                            </tr>
+                            <tr>
+                                <th>Место на диске:</th>
+                                <td>110 ГБ на скоростном NVMe SSD</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- инструкция по активации -->
+    <section class="container mb-5" id="activation">
+        <div class="card border-0 shadow-sm p-4 p-md-5 bg-white rounded-3">
+            <h4 class="fw-bold mb-3">Инструкция по активации ключа в Steam</h4>
+            <div class="row g-3 text-secondary small">
+                <div class="col-12 col-md-4">
+                    <div class="p-3 bg-light rounded-3 h-100">
+                        <div class="fw-bold text-dark mb-1">Шаг 1. Оформите покупку</div>
+                        <p class="mb-0">Нажмите «Купить сейчас» и подтвердите заказ. Цифровой ключ моментально появится на экране и сохранится в вашем личном кабинете.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="p-3 bg-light rounded-3 h-100">
+                        <div class="fw-bold text-dark mb-1">Шаг 2. Запустите Steam</div>
+                        <p class="mb-0">Откройте приложение Steam на вашем ПК, войдите в свой профиль и выберите вверху меню <strong>«Игры»</strong> &rarr; <strong>«Активировать в Steam...»</strong>.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="p-3 bg-light rounded-3 h-100">
+                        <div class="fw-bold text-dark mb-1">Шаг 3. Введите код игры</div>
+                        <p class="mb-0">Вставьте купленный лицензионный ключ. Игра добавится в вашу библиотеку и будет готова к загрузке.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- модальное окно авторизации и регистрации -->
+    <div class="modal fade" id="authModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="authModalTitle">Вход в аккаунт</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="authForm">
+                        <div class="mb-3">
+                            <label class="form-label small text-secondary">Логин</label>
+                            <input type="text" class="form-control" id="authLogin" placeholder="Введите логин" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-secondary">Пароль</label>
+                            <input type="password" class="form-control" id="authPassword" placeholder="Введите пароль" required>
+                        </div>
+                        <div id="authError" class="alert alert-danger py-2 small d-none"></div>
+                        <button type="submit" class="btn btn-dark w-100" id="authSubmitBtn">Войти</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="#" class="small text-secondary" id="authToggleLink">Нет аккаунта? Зарегистрироваться</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- модальное окно корзины -->
+    <div class="modal fade" id="cartModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Корзина</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="cartEmpty" class="text-center py-4 text-secondary">
+                        <p class="mb-0">Ваша корзина пуста</p>
+                    </div>
+                    <ul class="list-group list-group-flush mb-3" id="cartList"></ul>
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top fw-bold">
+                        <span>Итого:</span>
+                        <span id="cartTotalPrice">0 руб.</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Продолжить покупки</button>
+                    <button type="button" class="btn btn-dark btn-sm" id="checkoutBtn" disabled>Оформить заказ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- модальное окно успешной покупки -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-3">
+                <div class="modal-body">
+                    <div class="mb-3 text-success">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+                        </svg>
+                    </div>
+                    <h5 class="fw-bold mb-2">Оплата прошла успешно!</h5>
+                    <p class="text-secondary small mb-3">Ваш цифровой ключ активации Forza Horizon 6:</p>
+                    <div class="p-3 bg-light border rounded font-monospace fw-bold fs-5 text-dark mb-3" id="issuedKey">
+                        XXXX-XXXX-XXXX-XXXX
+                    </div>
+                    <p class="text-secondary small">Ключ моментально готов к активации в Steam.</p>
+                    <button type="button" class="btn btn-dark btn-sm w-100" data-bs-dismiss="modal">Отлично</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- модальное окно личного кабинета (мои покупки) -->
+    <div class="modal fade" id="userKeysModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Мои купленные ключи</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="userKeysEmpty" class="text-center py-4 text-secondary">
+                        <p class="mb-0">У вас пока нет купленных ключей</p>
+                    </div>
+                    <ul class="list-group list-group-flush" id="userKeysList"></ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- подвал -->
+    <footer id="contacts" class="bg-white border-top py-5 text-secondary small mt-auto">
+        <div class="container text-center">
+            <h5 class="fw-bold text-dark mb-2">ByteStore</h5>
+            <p class="text-secondary mb-3">Официальный магазин лицензионных цифровых ключей</p>
+            <div class="d-inline-flex flex-column flex-sm-row gap-3 text-secondary mb-4">
+                <span>Поддержка: <strong class="text-dark">support@bytestore.local</strong></span>
+                <span>Telegram: <strong class="text-dark">@bytestore_help</strong></span>
+                <span>Режим работы: <strong class="text-dark">24/7</strong></span>
+            </div>
+            <div class="pt-3 border-top text-muted">
+                <p class="mb-0">ByteStore. Учебная практика.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js?v=7"></script>
+    <script>
+        // обработчик для кнопки "Купить сейчас"
+        document.getElementById('buyInstantBtn')?.addEventListener('click', () => {
+            addToCart('8', 'Forza Horizon 6', 2999);
+            const cartModalEl = document.getElementById('cartModal');
+            const cartModal = bootstrap.Modal.getInstance(cartModalEl) || new bootstrap.Modal(cartModalEl);
+            cartModal.show();
+        });
+    </script>
+</body>
+</html>

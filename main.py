@@ -45,6 +45,19 @@ def get_db():
 def read_root():
     return FileResponse("index.html", headers={"Cache-Control": "no-cache, no-store, must-revalidate"})
 
+# промо-страницы товаров
+@app.get("/cyberpunk.html")
+def read_cyberpunk():
+    return FileResponse("cyberpunk.html", headers={"Cache-Control": "no-cache, no-store, must-revalidate"})
+
+@app.get("/forza6.html")
+def read_forza6():
+    return FileResponse("forza6.html", headers={"Cache-Control": "no-cache, no-store, must-revalidate"})
+
+@app.get("/windows.html")
+def read_windows():
+    return FileResponse("windows.html", headers={"Cache-Control": "no-cache, no-store, must-revalidate"})
+
 # скрипт фронтенда
 @app.get("/app.js")
 def read_js():
