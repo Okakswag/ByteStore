@@ -78,34 +78,7 @@
             </p>
             <div class="d-flex justify-content-center gap-3">
                 <a href="#catalog" class="btn btn-light px-4 py-2 fw-semibold">Перейти в каталог</a>
-                <a href="#advantages" class="btn btn-outline-secondary text-white px-4 py-2">Наши гарантии</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- блок преимуществ -->
-    <section id="advantages" class="container mb-5">
-        <div class="row g-4 text-center">
-            <div class="col-12 col-md-4">
-                <div class="card h-100 border-0 shadow-sm p-4 bg-white">
-                    <div class="fs-2 mb-2">⚡</div>
-                    <h5 class="fw-bold mb-2">Моментальная выдача</h5>
-                    <p class="text-secondary small mb-0">Лицензионный ключ появляется на экране сразу после подтверждения заказа.</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="card h-100 border-0 shadow-sm p-4 bg-white">
-                    <div class="fs-2 mb-2">🔑</div>
-                    <h5 class="fw-bold mb-2">100% Лицензия</h5>
-                    <p class="text-secondary small mb-0">Все ключи закупаются напрямую у официальных издателей и дистрибьюторов.</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="card h-100 border-0 shadow-sm p-4 bg-white">
-                    <div class="fs-2 mb-2">💬</div>
-                    <h5 class="fw-bold mb-2">Поддержка 24/7</h5>
-                    <p class="text-secondary small mb-0">Оперативная помощь с активацией и ответами на вопросы в любое время суток.</p>
-                </div>
+                <a href="#faq" class="btn btn-outline-secondary text-white px-4 py-2">Наши гарантии</a>
             </div>
         </div>
     </section>
@@ -484,14 +457,29 @@
         </div>
     </div>
 
-    <!-- блок часто задаваемых вопросов (FAQ) -->
+    <!-- блок часто задаваемых вопросов (FAQ) и гарантий -->
     <section id="faq" class="container mb-5">
         <div class="text-center mb-4">
             <h2 class="h3 fw-bold mb-1">Часто задаваемые вопросы</h2>
-            <p class="text-secondary small mb-0">Ответы на популярные вопросы о покупке и активации ключей</p>
+            <p class="text-secondary small mb-0">Ответы на популярные вопросы о покупке, гарантиях и активации ключей</p>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-8">
+        <div class="row g-3 align-items-stretch">
+            <!-- левая колонка преимуществ (2 карточки) -->
+            <div class="col-12 col-lg-3 d-flex flex-column gap-3">
+                <div class="card h-100 border-0 shadow-sm p-4 bg-white text-center d-flex flex-column justify-content-center">
+                    <div class="fs-2 mb-2">⚡</div>
+                    <h5 class="fw-bold mb-2">Моментальная выдача</h5>
+                    <p class="text-secondary small mb-0">Лицензионный ключ появляется на экране сразу после подтверждения заказа.</p>
+                </div>
+                <div class="card h-100 border-0 shadow-sm p-4 bg-white text-center d-flex flex-column justify-content-center">
+                    <div class="fs-2 mb-2">🔑</div>
+                    <h5 class="fw-bold mb-2">100% Лицензия</h5>
+                    <p class="text-secondary small mb-0">Все ключи закупаются напрямую у официальных издателей и дистрибьюторов.</p>
+                </div>
+            </div>
+
+            <!-- центральная колонка: аккордеон вопросов -->
+            <div class="col-12 col-lg-6">
                 <div class="accordion" id="faqAccordion">
                     <div class="accordion-item border-0 mb-3 shadow-sm rounded overflow-hidden">
                         <h2 class="accordion-header">
@@ -544,6 +532,20 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- правая колонка преимуществ (2 карточки) -->
+            <div class="col-12 col-lg-3 d-flex flex-column gap-3">
+                <div class="card h-100 border-0 shadow-sm p-4 bg-white text-center d-flex flex-column justify-content-center">
+                    <div class="fs-2 mb-2">🛡️</div>
+                    <h5 class="fw-bold mb-2">Бессрочная гарантия</h5>
+                    <p class="text-secondary small mb-0">Каждый ключ проходит валидацию и гарантирует вечную активацию продукта.</p>
+                </div>
+                <div class="card h-100 border-0 shadow-sm p-4 bg-white text-center d-flex flex-column justify-content-center">
+                    <div class="fs-2 mb-2">💬</div>
+                    <h5 class="fw-bold mb-2">Поддержка 24/7</h5>
+                    <p class="text-secondary small mb-0">Оперативная помощь с активацией и ответами на вопросы в любое время суток.</p>
                 </div>
             </div>
         </div>
