@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
+from typing import Optional
 from db import SessionLocal, engine, Base
 from models import Product, Category, DigitalKey, User
 
@@ -97,10 +98,25 @@ def register(data: AuthData, db: Session = Depends(get_db)):
         "role": new_user.role
     }
 
-# получение каталога товаров из базы данных
+# получение каталога товаров из базы данных (с фильтром по цене)
 @app.get("/api/products")
-def get_products(db: Session = Depends(get_db)):
-    products = db.query(Product).all()
+def get_products(
+    price_min: Optional[float] = Query(None, description="Минимальная цена"),
+    price_max: Optional[float] = Query(None, description="Максимальная цена"),
+    db: Session = Depends(get_db)
+):
+    # базовый SQL-запрос: SELECT * FROM products
+    query = db.query(Product)
+
+    # фильтр "цена от" — WHERE price >= price_min
+    if price_min is not None:
+        query = query.filter(Product.price >= price_min)
+
+    # фильтр "цена до" — WHERE price <= price_max
+    if price_max is not None:
+        query = query.filter(Product.price <= price_max)
+
+    products = query.all()
     result = []
     for p in products:
         # подсчет свободных ключей для каждого товара

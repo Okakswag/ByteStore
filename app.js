@@ -54,14 +54,12 @@ function setupEventListeners() {
         link.addEventListener('click', (e) => {
             e.preventDefault();
 
-            // переключение активного пункта в меню
             filterLinks.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
 
             const filter = link.getAttribute('data-filter');
             filterProducts(filter);
 
-            // если выбрана категория, плавно скроллим к каталогу
             if (filter !== 'all') {
                 const catalogEl = document.getElementById('catalog');
                 if (catalogEl) {
@@ -107,16 +105,48 @@ function setupEventListeners() {
         sortSelect.addEventListener('change', applyFilterAndSort);
     }
 
+    // фильтр по цене (SQL на сервере)
+    const priceFilterBtn = document.getElementById('priceFilterBtn');
+    if (priceFilterBtn) {
+        priceFilterBtn.addEventListener('click', applyPriceFilter);
+    }
+
+    // сброс фильтра по цене
+    const priceResetBtn = document.getElementById('priceResetBtn');
+    if (priceResetBtn) {
+        priceResetBtn.addEventListener('click', () => {
+            const minEl = document.getElementById('priceMin');
+            const maxEl = document.getElementById('priceMax');
+            if (minEl) minEl.value = '';
+            if (maxEl) maxEl.value = '';
+            loadAllProducts();
+        });
+    }
+
     // кнопки добавления в корзину в каталоге
+    attachBuyHandlers();
+
+    // кнопка оформления заказа в корзине
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', handleCheckout);
+    }
+}
+
+// навешивание обработчиков на кнопки "В корзину" (вынесено отдельно, т.к. карточки перерисовываются)
+function attachBuyHandlers() {
     const buyButtons = document.querySelectorAll('.btn-buy');
     buyButtons.forEach(btn => {
+        // защита от повторного навешивания
+        if (btn.dataset.handlerAttached === '1') return;
+        btn.dataset.handlerAttached = '1';
+
         btn.addEventListener('click', () => {
             const id = btn.getAttribute('data-id');
             const name = btn.getAttribute('data-name');
             const price = parseInt(btn.getAttribute('data-price'), 10);
             addToCart(id, name, price);
 
-            // легкая анимация текста кнопки при добавлении
             const originalText = btn.textContent;
             btn.textContent = 'Добавлено ✓';
             setTimeout(() => {
@@ -124,12 +154,6 @@ function setupEventListeners() {
             }, 700);
         });
     });
-
-    // кнопка оформления заказа в корзине
-    const checkoutBtn = document.getElementById('checkoutBtn');
-    if (checkoutBtn) {
-        checkoutBtn.addEventListener('click', handleCheckout);
-    }
 }
 
 // переключение режима авторизации (вход / регистрация)
@@ -182,11 +206,9 @@ async function handleAuthSubmit(e) {
             return;
         }
 
-        // сохраняем пользователя
         currentUser = { id: data.id, login: data.login, role: data.role };
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
-        // сбрасываем форму и закрываем окно
         document.getElementById('authForm').reset();
         if (errorBlock) errorBlock.classList.add('d-none');
 
@@ -259,7 +281,7 @@ async function handleAdminAddKey(e) {
     }
 }
 
-// загрузка купленных ключей пользователя (Личный кабинет по ТЗ 3.4)
+// загрузка купленных ключей пользователя
 async function loadUserKeys() {
     if (!currentUser) return;
 
@@ -410,7 +432,6 @@ function applyFilterAndSort() {
     const cards = Array.from(document.querySelectorAll('.product-card-col'));
     let visibleCount = 0;
 
-    // сортировка массива карточек
     cards.sort((a, b) => {
         const btnA = a.querySelector('.btn-buy');
         const btnB = b.querySelector('.btn-buy');
@@ -428,7 +449,6 @@ function applyFilterAndSort() {
         }
     });
 
-    // упорядочивание в контейнере и фильтрация по категории и строке поиска
     cards.forEach(card => {
         if (grid) grid.appendChild(card);
 
@@ -446,7 +466,6 @@ function applyFilterAndSort() {
         }
     });
 
-    // сообщение, если ничего не найдено
     if (noProductsFound) {
         if (visibleCount === 0) {
             noProductsFound.classList.remove('d-none');
@@ -456,13 +475,149 @@ function applyFilterAndSort() {
     }
 }
 
+// ============ ФИЛЬТР ПО ЦЕНЕ (SQL НА СЕРВЕРЕ) ============
+
+// загрузка ВСЕХ товаров (для сброса фильтра по цене)
+async function loadAllProducts() {
+    try {
+        const response = await fetch('/api/products');
+        if (!response.ok) return;
+        const products = await response.json();
+        renderProducts(products);
+    } catch (err) {
+        console.error('Ошибка загрузки товаров:', err);
+    }
+}
+
+// фильтр по цене через SQL-запрос на сервере
+async function applyPriceFilter() {
+    const minEl = document.getElementById('priceMin');
+    const maxEl = document.getElementById('priceMax');
+    const min = minEl ? minEl.value.trim() : '';
+    const max = maxEl ? maxEl.value.trim() : '';
+
+    // если оба пустые — грузим всё
+    if (!min && !max) {
+        await loadAllProducts();
+        return;
+    }
+
+    // простая валидация: "от" не больше "до"
+    if (min && max && parseFloat(min) > parseFloat(max)) {
+        alert('Цена "от" не может быть больше цены "до"');
+        return;
+    }
+
+    const params = [];
+    if (min) params.push(`price_min=${encodeURIComponent(min)}`);
+    if (max) params.push(`price_max=${encodeURIComponent(max)}`);
+
+    try {
+        const response = await fetch(`/api/products?${params.join('&')}`);
+        if (!response.ok) return;
+        const products = await response.json();
+        renderProducts(products);
+    } catch (err) {
+        console.error('Ошибка фильтра по цене:', err);
+    }
+}
+
+// перерисовка карточек товаров по данным с сервера
+function renderProducts(products) {
+    const grid = document.getElementById('productsGrid');
+    const noProductsFound = document.getElementById('noProductsFound');
+    if (!grid) return;
+
+    // удаляем все старые карточки (блок "не найдено" оставляем)
+    grid.querySelectorAll('.product-card-col').forEach(el => el.remove());
+
+    if (products.length === 0) {
+        if (noProductsFound) noProductsFound.classList.remove('d-none');
+        return;
+    }
+    if (noProductsFound) noProductsFound.classList.add('d-none');
+
+    // метаданные карточек, которых нет в JSON с сервера
+    const meta = {
+        1:  { img: 'img/cyberpunk.png',  desc: 'Шпионский экшен в Найт-Сити с Киану Ривзом.',            link: '/cyberpunk.html', cat: 'games',    btn: 'Об игре' },
+        2:  { img: 'img/eldenring.png',  desc: 'Ролевая игра года в открытом мире от FromSoftware.',     link: null,              cat: 'games',    btn: null },
+        3:  { img: 'img/windows.jpg',    desc: 'Официальный бессрочный ключ для операционной системы.',  link: '/windows.html',   cat: 'programs', btn: 'О системе' },
+        4:  { img: 'img/gtav.jpg',       desc: 'Легендарный криминальный экшен в Лос-Сантосе от Rockstar Games.', link: null,      cat: 'games',    btn: null },
+        5:  { img: 'img/rdr2.jpg',       desc: 'Грандиозная история Артура Моргана и банды Ван дер Линде на Диком Западе.', link: null, cat: 'games',    btn: null },
+        6:  { img: 'img/office.svg',     desc: 'Пакет офисных программ: Word, Excel, PowerPoint с бессрочной лицензией.', link: null,  cat: 'programs', btn: null },
+        7:  { img: 'img/witcher3.jpg',   desc: 'Культовая ролевая игра о ведьмаке Геральте из Ривии.',    link: null,              cat: 'games',    btn: null },
+        8:  { img: 'img/forza6.jpg',     desc: 'Долгожданное продолжение легендарного гоночного фестиваля нового поколения.', link: '/forza6.html', cat: 'games', btn: 'Об игре' },
+        9:  { img: 'img/hogwarts.jpg',   desc: 'Погрузитесь в мир магии Хогвартса конца XIX века с открытым миром.', link: null, cat: 'games',    btn: null },
+        10: { img: 'img/forza5.jpg',     desc: 'Красочный гоночный симулятор в открытом мире фестиваля Мексики.', link: null,      cat: 'games',    btn: null },
+        11: { img: 'img/photoshop.svg',  desc: 'Мировой стандарт графического дизайна и обработки фотографий.', link: null,          cat: 'programs', btn: null },
+        12: { img: 'img/steam.svg',      desc: 'Мгновенный промокод для пополнения кошелька Steam на 1000 рублей.', link: null,      cat: 'programs', btn: null }
+    };
+
+    products.forEach(p => {
+        const m = meta[p.id] || { img: 'img/ByteStore.png', desc: '', link: null, cat: 'games', btn: null };
+        const inStock = p.available_keys > 0;
+        const priceFormatted = p.price.toLocaleString('ru-RU');
+
+        const catLabel = m.cat === 'games' ? 'Игры' : 'Программы';
+        const badge = `${catLabel} / ${p.platform || 'PC'}`;
+
+        const aboutBtn = m.link && m.btn
+            ? `<a href="${m.link}" class="btn btn-outline-secondary btn-sm">${m.btn}</a>`
+            : '';
+
+        const buyBtn = inStock
+            ? `<button class="btn btn-dark btn-sm btn-buy" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}">В корзину</button>`
+            : `<button class="btn btn-dark btn-sm" disabled>Закончился</button>`;
+
+        const imgHtml = m.link
+            ? `<a href="${m.link}" class="d-block text-center"><img src="${m.img}" class="card-img-top p-2" alt="${p.name}" style="height: 230px; object-fit: contain;"></a>`
+            : `<img src="${m.img}" class="card-img-top p-2" alt="${p.name}" style="height: 230px; object-fit: contain;">`;
+
+        const titleHtml = m.link
+            ? `<a href="${m.link}" class="text-decoration-none text-dark"><h5 class="card-title fw-bold mb-1">${p.name}</h5></a>`
+            : `<h5 class="card-title fw-bold mb-1">${p.name}</h5>`;
+
+        const stockHtml = inStock
+            ? `<div class="text-muted small mb-2" id="stock-${p.id}">В наличии: ${p.available_keys} шт.</div>`
+            : `<div class="text-danger small mb-2" id="stock-${p.id}">Нет в наличии</div>`;
+
+        const col = document.createElement('div');
+        col.className = 'col product-card-col';
+        col.setAttribute('data-category', m.cat);
+        col.innerHTML = `
+            <div class="card h-100 shadow-sm border-0">
+                ${imgHtml}
+                <div class="card-body d-flex flex-column">
+                    <span class="badge bg-secondary align-self-start mb-2">${badge}</span>
+                    ${titleHtml}
+                    ${stockHtml}
+                    <p class="card-text text-secondary small flex-grow-1">${m.desc}</p>
+                    <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                        <span class="fw-bold fs-5">${priceFormatted} руб.</span>
+                        <div class="d-flex gap-1">
+                            ${aboutBtn}
+                            ${buyBtn}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        grid.appendChild(col);
+    });
+
+    // навешиваем обработчики на новые кнопки "В корзину"
+    attachBuyHandlers();
+
+    // применяем текущую категорию/поиск/сортировку к новым карточкам
+    applyFilterAndSort();
+}
+
 // добавление товара в корзину
 function addToCart(id, name, price) {
     cart.push({ id, name, price });
     saveCart();
     updateCartUI();
 
-    // легкая подсветка кнопки корзины в шапке
     const cartBtn = document.getElementById('cartBtn');
     if (cartBtn) {
         cartBtn.classList.add('btn-secondary');
@@ -529,11 +684,11 @@ function updateCartUI() {
     if (checkoutBtn) checkoutBtn.disabled = false;
 }
 
-// оформление покупки и списание ключа через бэкенд
+// оформление покупки: покупаем КАЖДЫЙ товар из корзины и выдаём ключ на каждый
 async function handleCheckout() {
     if (cart.length === 0) return;
 
-    // проверка авторизации: если не вошел, просим войти
+    // проверка авторизации
     if (!currentUser) {
         const cartModalEl = document.getElementById('cartModal');
         const cartModal = bootstrap.Modal.getInstance(cartModalEl) || new bootstrap.Modal(cartModalEl);
@@ -551,44 +706,82 @@ async function handleCheckout() {
         return;
     }
 
-    const firstItem = cart[0];
+    // группируем одинаковые товары: { id: { name, qty } }
+    const grouped = {};
+    cart.forEach(item => {
+        if (!grouped[item.id]) grouped[item.id] = { name: item.name, qty: 0 };
+        grouped[item.id].qty++;
+    });
+
+    const issued = [];
+    const failed = [];
+    const boughtIds = new Set();
 
     try {
-        // строгий запрос к fastapi бэкенду с передачей id покупателя
-        const response = await fetch(`/api/buy/${firstItem.id}?user_id=${currentUser.id}`, {
-            method: 'POST'
-        });
+        for (const [id, info] of Object.entries(grouped)) {
+            for (let i = 0; i < info.qty; i++) {
+                const response = await fetch(`/api/buy/${id}?user_id=${currentUser.id}`, {
+                    method: 'POST'
+                });
 
-        if (!response.ok) {
-            const errData = await response.json();
-            alert(errData.detail || 'Ошибка при оформлении заказа');
-            return;
+                if (!response.ok) {
+                    const errData = await response.json().catch(() => ({}));
+                    failed.push({ name: info.name, reason: errData.detail || 'Ошибка покупки' });
+                    break;
+                }
+
+                const data = await response.json();
+                issued.push({ name: info.name, key: data.key_code });
+            }
+
+            if (issued.some(x => x.name === info.name)) {
+                boughtIds.add(info.name);
+            }
         }
-
-        const data = await response.json();
-        const key = data.key_code;
 
         // закрываем корзину
         const cartModalEl = document.getElementById('cartModal');
         const cartModal = bootstrap.Modal.getInstance(cartModalEl) || new bootstrap.Modal(cartModalEl);
         if (cartModal) cartModal.hide();
 
-        // очищаем корзину
-        cart = [];
-        saveCart();
-        updateCartUI();
-
-        // показываем модалку успеха с настоящим ключом из базы данных
-        const issuedKeyEl = document.getElementById('issuedKey');
-        if (issuedKeyEl) {
-            issuedKeyEl.textContent = key;
+        // обновляем корзину: убираем успешно купленные позиции
+        if (boughtIds.size > 0) {
+            cart = cart.filter(item => !boughtIds.has(item.name));
+            saveCart();
+            updateCartUI();
         }
 
-        const successModalEl = document.getElementById('successModal');
-        const successModal = new bootstrap.Modal(successModalEl);
-        successModal.show();
+        // показываем модалку успеха
+        const issuedKeyEl = document.getElementById('issuedKey');
+        if (issuedKeyEl) {
+            if (issued.length === 1) {
+                issuedKeyEl.classList.remove('fs-6');
+                issuedKeyEl.classList.add('fs-5');
+                issuedKeyEl.textContent = issued[0].key;
+            } else if (issued.length > 1) {
+                issuedKeyEl.classList.remove('fs-5');
+                issuedKeyEl.classList.add('fs-6');
+                issuedKeyEl.innerHTML = issued.map(x =>
+                    `<div class="mb-2 text-start">
+                        <div class="text-secondary small">${x.name}</div>
+                        <div class="font-monospace fw-bold">${x.key}</div>
+                    </div>`
+                ).join('');
+            } else {
+                issuedKeyEl.textContent = '—';
+            }
+        }
 
-        // обновляем счетчики остатка ключей на карточках
+        if (failed.length > 0) {
+            alert('Не удалось купить:\n' + failed.map(f => `• ${f.name} — ${f.reason}`).join('\n'));
+        }
+
+        if (issued.length > 0) {
+            const successModalEl = document.getElementById('successModal');
+            const successModal = new bootstrap.Modal(successModalEl);
+            successModal.show();
+        }
+
         await loadStock();
 
     } catch (err) {

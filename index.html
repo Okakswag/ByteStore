@@ -89,19 +89,24 @@
 
     <!-- заголовок каталога и панель фильтрации -->
     <div id="catalog" class="container mb-4">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center border-bottom pb-3 gap-3">
-            <div>
-                <h2 class="h3 fw-bold mb-1" id="pageTitle">Каталог товаров</h2>
-                <p class="text-secondary small mb-0" id="pageSubtitle">Лицензионные ключи активации с моментальной выдачей</p>
-            </div>
-            <div class="d-flex align-items-center gap-2">
-                <input type="text" class="form-control form-control-sm" id="searchInput" placeholder="Поиск по названию..." style="max-width: 220px;">
-                <select class="form-select form-select-sm" id="sortSelect" style="max-width: 170px;">
-                    <option value="default">По умолчанию</option>
-                    <option value="price-asc">Сначала дешевле</option>
-                    <option value="price-desc">Сначала дороже</option>
-                </select>
-            </div>
+        <!-- Верхняя строка: заголовок и подзаголовок -->
+        <div class="border-bottom pb-2 mb-3">
+            <h2 class="h3 fw-bold mb-1" id="pageTitle">Каталог товаров</h2>
+            <p class="text-secondary small mb-0" id="pageSubtitle">Лицензионные ключи активации с моментальной выдачей</p>
+        </div>
+        
+        <!-- Нижняя строка: все фильтры в один ряд -->
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            <input type="text" class="form-control form-control-sm" id="searchInput" placeholder="Поиск по названию..." style="max-width: 200px;">
+            <input type="number" class="form-control form-control-sm" id="priceMin" placeholder="Цена от" min="0" style="max-width: 110px;">
+            <input type="number" class="form-control form-control-sm" id="priceMax" placeholder="Цена до" min="0" style="max-width: 110px;">
+            <button class="btn btn-outline-secondary btn-sm" id="priceFilterBtn" type="button">Применить</button>
+            <button class="btn btn-outline-secondary btn-sm" id="priceResetBtn" type="button">Сбросить</button>
+            <select class="form-select form-select-sm ms-md-auto" id="sortSelect" style="max-width: 170px;">
+                <option value="default">По умолчанию</option>
+                <option value="price-asc">Сначала дешевле</option>
+                <option value="price-desc">Сначала дороже</option>
+            </select>
         </div>
     </div>
 
@@ -596,6 +601,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="app.js?v=7"></script>
+    <script src="app.js?v=8"></script>
 </body>
 </html>
