@@ -475,9 +475,7 @@ function applyFilterAndSort() {
     }
 }
 
-// ============ ФИЛЬТР ПО ЦЕНЕ (SQL НА СЕРВЕРЕ) ============
-
-// загрузка ВСЕХ товаров (для сброса фильтра по цене)
+// фильтрация товаров по цене через сервер
 async function loadAllProducts() {
     try {
         const response = await fetch('/api/products');
@@ -489,20 +487,18 @@ async function loadAllProducts() {
     }
 }
 
-// фильтр по цене через SQL-запрос на сервере
+// отправка запроса с диапазоном цен
 async function applyPriceFilter() {
     const minEl = document.getElementById('priceMin');
     const maxEl = document.getElementById('priceMax');
     const min = minEl ? minEl.value.trim() : '';
     const max = maxEl ? maxEl.value.trim() : '';
 
-    // если оба пустые — грузим всё
     if (!min && !max) {
         await loadAllProducts();
         return;
     }
 
-    // простая валидация: "от" не больше "до"
     if (min && max && parseFloat(min) > parseFloat(max)) {
         alert('Цена "от" не может быть больше цены "до"');
         return;
@@ -528,7 +524,6 @@ function renderProducts(products) {
     const noProductsFound = document.getElementById('noProductsFound');
     if (!grid) return;
 
-    // удаляем все старые карточки (блок "не найдено" оставляем)
     grid.querySelectorAll('.product-card-col').forEach(el => el.remove());
 
     if (products.length === 0) {
@@ -537,7 +532,7 @@ function renderProducts(products) {
     }
     if (noProductsFound) noProductsFound.classList.add('d-none');
 
-    // метаданные карточек, которых нет в JSON с сервера
+    // описания и изображения товаров
     const meta = {
         1:  { img: 'img/cyberpunk.png',  desc: 'Шпионский экшен в Найт-Сити с Киану Ривзом.',            link: '/cyberpunk.html', cat: 'games',    btn: 'Об игре' },
         2:  { img: 'img/eldenring.png',  desc: 'Ролевая игра года в открытом мире от FromSoftware.',     link: null,              cat: 'games',    btn: null },
@@ -567,7 +562,7 @@ function renderProducts(products) {
 
         const buyBtn = inStock
             ? `<button class="btn btn-dark btn-sm btn-buy" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}">В корзину</button>`
-            : `<button class="btn btn-dark btn-sm" disabled>Закончился</button>`;
+            : `<button class="btn btn-dark btn-sm btn-buy" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" disabled>Закончился</button>`;
 
         const imgHtml = m.link
             ? `<a href="${m.link}" class="d-block text-center"><img src="${m.img}" class="card-img-top p-2" alt="${p.name}" style="height: 230px; object-fit: contain;"></a>`
@@ -608,7 +603,7 @@ function renderProducts(products) {
     // навешиваем обработчики на новые кнопки "В корзину"
     attachBuyHandlers();
 
-    // применяем текущую категорию/поиск/сортировку к новым карточкам
+    // применяем фильтрацию и сортировку
     applyFilterAndSort();
 }
 
@@ -684,7 +679,7 @@ function updateCartUI() {
     if (checkoutBtn) checkoutBtn.disabled = false;
 }
 
-// оформление покупки: покупаем КАЖДЫЙ товар из корзины и выдаём ключ на каждый
+// оформление покупки всех товаров из корзины
 async function handleCheckout() {
     if (cart.length === 0) return;
 
@@ -706,7 +701,7 @@ async function handleCheckout() {
         return;
     }
 
-    // группируем одинаковые товары: { id: { name, qty } }
+    // группировка одинаковых товаров для покупки
     const grouped = {};
     cart.forEach(item => {
         if (!grouped[item.id]) grouped[item.id] = { name: item.name, qty: 0 };
@@ -715,7 +710,6 @@ async function handleCheckout() {
 
     const issued = [];
     const failed = [];
-    const boughtIds = new Set();
 
     try {
         for (const [id, info] of Object.entries(grouped)) {
@@ -732,32 +726,49 @@ async function handleCheckout() {
 
                 const data = await response.json();
                 issued.push({ name: info.name, key: data.key_code });
-            }
 
-            if (issued.some(x => x.name === info.name)) {
-                boughtIds.add(info.name);
+                // удаляем один купленный товар из корзины
+                const cartIdx = cart.findIndex(c => c.id == id);
+                if (cartIdx !== -1) {
+                    cart.splice(cartIdx, 1);
+                }
             }
         }
+
+        saveCart();
+        updateCartUI();
 
         // закрываем корзину
         const cartModalEl = document.getElementById('cartModal');
         const cartModal = bootstrap.Modal.getInstance(cartModalEl) || new bootstrap.Modal(cartModalEl);
         if (cartModal) cartModal.hide();
 
-        // обновляем корзину: убираем успешно купленные позиции
-        if (boughtIds.size > 0) {
-            cart = cart.filter(item => !boughtIds.has(item.name));
-            saveCart();
-            updateCartUI();
-        }
-
         // показываем модалку успеха
         const issuedKeyEl = document.getElementById('issuedKey');
+        const subtitleEl = document.getElementById('issuedKeySubtitle');
+        if (subtitleEl) {
+            subtitleEl.textContent = issued.length > 1
+                ? 'Ваши цифровые ключи активации:'
+                : 'Ваш цифровой ключ активации:';
+        }
         if (issuedKeyEl) {
             if (issued.length === 1) {
                 issuedKeyEl.classList.remove('fs-6');
                 issuedKeyEl.classList.add('fs-5');
                 issuedKeyEl.textContent = issued[0].key;
+            } else if (issued.length > 1) {
+                issuedKeyEl.classList.remove('fs-5');
+                issuedKeyEl.classList.add('fs-6');
+                issuedKeyEl.innerHTML = issued.map(x =>
+                    `<div class="mb-2 text-start">
+                        <div class="text-secondary small">${x.name}</div>
+                        <div class="font-monospace fw-bold">${x.key}</div>
+                    </div>`
+                ).join('');
+            } else {
+                issuedKeyEl.textContent = '—';
+            }
+        }
             } else if (issued.length > 1) {
                 issuedKeyEl.classList.remove('fs-5');
                 issuedKeyEl.classList.add('fs-6');

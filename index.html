@@ -89,13 +89,11 @@
 
     <!-- заголовок каталога и панель фильтрации -->
     <div id="catalog" class="container mb-4">
-        <!-- Верхняя строка: заголовок и подзаголовок -->
         <div class="border-bottom pb-2 mb-3">
             <h2 class="h3 fw-bold mb-1" id="pageTitle">Каталог товаров</h2>
             <p class="text-secondary small mb-0" id="pageSubtitle">Лицензионные ключи активации с моментальной выдачей</p>
         </div>
         
-        <!-- Нижняя строка: все фильтры в один ряд -->
         <div class="d-flex flex-wrap align-items-center gap-2">
             <input type="text" class="form-control form-control-sm" id="searchInput" placeholder="Поиск по названию..." style="max-width: 200px;">
             <input type="number" class="form-control form-control-sm" id="priceMin" placeholder="Цена от" min="0" style="max-width: 110px;">
@@ -412,7 +410,7 @@
                         </svg>
                     </div>
                     <h5 class="fw-bold mb-2">Оплата прошла успешно!</h5>
-                    <p class="text-secondary small mb-3">Ваш цифровой ключ активации:</p>
+                    <p class="text-secondary small mb-3" id="issuedKeySubtitle">Ваш цифровой ключ активации:</p>
                     <div class="p-3 bg-light border rounded font-monospace fw-bold fs-5 text-dark mb-3" id="issuedKey">
                         XXXX-XXXX-XXXX-XXXX
                     </div>

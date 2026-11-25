@@ -98,21 +98,18 @@ def register(data: AuthData, db: Session = Depends(get_db)):
         "role": new_user.role
     }
 
-# получение каталога товаров из базы данных (с фильтром по цене)
+# получение каталога товаров (с поддержкой фильтра по цене)
 @app.get("/api/products")
 def get_products(
     price_min: Optional[float] = Query(None, description="Минимальная цена"),
     price_max: Optional[float] = Query(None, description="Максимальная цена"),
     db: Session = Depends(get_db)
 ):
-    # базовый SQL-запрос: SELECT * FROM products
     query = db.query(Product)
 
-    # фильтр "цена от" — WHERE price >= price_min
+    # фильтрация по диапазону цен
     if price_min is not None:
         query = query.filter(Product.price >= price_min)
-
-    # фильтр "цена до" — WHERE price <= price_max
     if price_max is not None:
         query = query.filter(Product.price <= price_max)
 
