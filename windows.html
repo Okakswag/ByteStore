@@ -3,62 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows 11 Pro — Купить бессрочный лицензионный ключ | ByteStore</title>
+    <title>Windows 11 Pro — Купить ключ | ByteStore</title>
     <link rel="icon" type="image/png" href="img/ByteStore.png">
-    <!-- шрифты и стили -->
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #f8f9fa;
+            font-family: 'Satoshi', sans-serif;
+            background-color: #fff;
             color: #212529;
-        }
-        .navbar-brand {
-            letter-spacing: -0.5px;
-        }
-        .badge-discount {
-            background-color: #dc3545;
-            font-size: 0.85rem;
-            padding: 0.35rem 0.65rem;
-        }
-        .specs-table th {
-            width: 35%;
-            font-weight: 600;
-            color: #6c757d;
         }
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-    <!-- навигационная панель -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top py-3">
+    <!-- навигация -->
+    <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top py-2">
         <div class="container">
-            <a class="navbar-brand fw-bold fs-4 d-flex align-items-center gap-2" href="/">
-                <img src="img/ByteStore.png" alt="ByteStore" width="32" height="32" class="rounded-2">
+            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="/">
+                <img src="img/ByteStore.png" alt="ByteStore" width="30" height="30" class="rounded">
                 <span>ByteStore</span>
             </a>
 
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-dark fw-semibold" href="/#catalog">← Вернуться в каталог</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">О системе</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#specs">Системные требования</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#activation">Активация</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contacts">Контакты</a>
+                        <a class="nav-link" href="/#catalog">← В каталог</a>
                     </li>
                 </ul>
 
@@ -79,252 +53,136 @@
     <!-- хлебные крошки -->
     <div class="container py-3">
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0 small">
+            <ol class="breadcrumb small mb-0">
                 <li class="breadcrumb-item"><a href="/" class="text-secondary text-decoration-none">Главная</a></li>
-                <li class="breadcrumb-item"><a href="/#catalog" class="text-secondary text-decoration-none">Программное обеспечение</a></li>
-                <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Windows 11 Pro</li>
+                <li class="breadcrumb-item"><a href="/#catalog" class="text-secondary text-decoration-none">Программы</a></li>
+                <li class="breadcrumb-item active text-dark" aria-current="page">Windows 11 Pro</li>
             </ol>
         </nav>
     </div>
 
-    <!-- главный промо-блок ОС -->
-    <section class="container mb-5" id="about">
-        <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white p-4 p-lg-5">
-            <div class="row g-4 align-items-center">
-                <!-- постер товара -->
-                <div class="col-12 col-lg-5 text-center">
-                    <div class="p-3 bg-light rounded-4 shadow-sm">
-                        <img src="img/windows.jpg" alt="Windows 11 Pro" class="img-fluid rounded-3" style="max-height: 380px; object-fit: contain;">
-                    </div>
-                    <div class="d-flex justify-content-center gap-2 mt-3">
-                        <span class="badge bg-secondary">Microsoft</span>
-                        <span class="badge bg-dark">64-bit / 32-bit</span>
-                        <span class="badge bg-primary">Бессрочная</span>
-                        <span class="badge bg-light text-dark border">Мультиязычная</span>
+    <!-- основной блок товара -->
+    <main class="container mb-5">
+        <div class="row g-4 mb-5">
+            <!-- постер товара -->
+            <div class="col-12 col-md-5 text-center">
+                <div class="border rounded p-3 bg-light">
+                    <img src="img/windows.jpg" alt="Windows 11 Pro" class="img-fluid" style="max-height: 350px; object-fit: contain;">
+                </div>
+            </div>
+
+            <!-- информация о товаре -->
+            <div class="col-12 col-md-7">
+                <div class="mb-2">
+                    <span class="badge bg-secondary">Microsoft</span>
+                    <span class="badge bg-dark">PC</span>
+                    <span class="badge bg-light text-dark border">Бессрочная</span>
+                </div>
+
+                <h1 class="h2 fw-bold mb-3">Windows 11 Professional</h1>
+                <p class="text-secondary mb-4">
+                    Официальная операционная система от Microsoft для компьютеров и ноутбуков. Включает шифрование BitLocker, виртуализацию и удаленный рабочий стол.
+                </p>
+
+                <!-- характеристики -->
+                <ul class="list-unstyled small text-secondary mb-4">
+                    <li class="mb-1"><strong>Тип программы:</strong> Операционная система</li>
+                    <li class="mb-1"><strong>Разработчик:</strong> Microsoft Corporation</li>
+                    <li class="mb-1"><strong>Разрядность:</strong> 64-бит (x64)</li>
+                    <li class="mb-1"><strong>Язык:</strong> Мультиязычная (включая русский)</li>
+                    <li class="mb-1"><strong>Статус:</strong> <span class="text-success fw-bold" id="stock-3">В наличии: 1 шт.</span></li>
+                </ul>
+
+                <!-- блок цены и кнопок -->
+                <div class="p-3 bg-light rounded border mb-3">
+                    <div class="fs-3 fw-bold mb-2">890 руб.</div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-dark btn-buy" data-id="3" data-name="Windows 11 Pro" data-price="890">
+                            В корзину
+                        </button>
+                        <button class="btn btn-dark" id="buyInstantBtn">
+                            Купить сейчас
+                        </button>
                     </div>
                 </div>
 
-                <!-- информация о товаре и кнопка покупки -->
-                <div class="col-12 col-lg-7">
-                    <div class="d-flex align-items-center gap-2 mb-2">
-                        <span class="badge bg-success text-white fw-semibold">Лидер продаж ПО</span>
-                        <span class="badge badge-discount fw-semibold">-64%</span>
-                        <span class="text-secondary small">Мгновенная выдача</span>
-                    </div>
-
-                    <h1 class="display-6 fw-bold mb-2">Windows 11 Professional</h1>
-                    <p class="text-secondary lead fs-6 mb-4">
-                        Современная флагманская операционная система от Microsoft для работы, учебы и игр. Включает расширенные функции безопасности BitLocker, виртуализацию Hyper-V, удаленный рабочий стол и поддержку всех современных обновлений.
-                    </p>
-
-                    <!-- параметры в виде сетки -->
-                    <div class="row g-2 mb-4 small text-secondary">
-                        <div class="col-6 col-sm-4">
-                            <span class="d-block text-muted">Тип лицензии:</span>
-                            <strong class="text-dark">Официальная Retail / OEM</strong>
-                        </div>
-                        <div class="col-6 col-sm-4">
-                            <span class="d-block text-muted">Разработчик:</span>
-                            <strong class="text-dark">Microsoft Corporation</strong>
-                        </div>
-                        <div class="col-6 col-sm-4">
-                            <span class="d-block text-muted">Срок действия:</span>
-                            <strong class="text-dark">Бессрочно (Навсегда)</strong>
-                        </div>
-                        <div class="col-6 col-sm-4">
-                            <span class="d-block text-muted">Разрядность:</span>
-                            <strong class="text-dark">x64 / x86</strong>
-                        </div>
-                        <div class="col-6 col-sm-4">
-                            <span class="d-block text-muted">Активация:</span>
-                            <strong class="text-dark">Онлайн через серверы MS</strong>
-                        </div>
-                        <div class="col-6 col-sm-4">
-                            <span class="d-block text-muted">Наличие:</span>
-                            <strong class="text-success" id="stock-3">В наличии: 3 шт.</strong>
-                        </div>
-                    </div>
-
-                    <!-- блок цены и покупки -->
-                    <div class="p-3 bg-light rounded-3 border d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
-                        <div>
-                            <div class="text-secondary small text-decoration-line-through">2 490 руб.</div>
-                            <div class="fw-bold fs-3 text-dark">890 руб.</div>
-                            <div class="text-muted small">Оригинальный 25-значный ключ продукта</div>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-outline-secondary btn-buy px-3" data-id="3" data-name="Windows 11 Pro" data-price="890">
-                                В корзину
-                            </button>
-                            <button class="btn btn-dark px-4 fw-semibold" id="buyInstantBtn">
-                                Купить сейчас
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="mt-3 text-secondary small d-flex gap-3">
-                        <span>⚡ Мгновенная выдача ключа</span>
-                        <span>🔑 Привязка к материнской плате</span>
-                        <span>🛡️ Гарантия активации 100%</span>
-                    </div>
+                <div class="small text-muted">
+                    Лицензионный цифровой ключ с моментальной выдачей сразу после подтверждения заказа.
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- ключевые особенности ОС -->
-    <section class="container mb-5">
-        <div class="text-center mb-4">
-            <h2 class="h4 fw-bold mb-1">Возможности редакции Professional</h2>
-            <p class="text-secondary small mb-0">Преимущества Pro-версии перед обычной домашней Windows 11 Home</p>
+        <!-- описание системы -->
+        <div class="mb-5">
+            <h3 class="h4 fw-bold mb-3 border-bottom pb-2">Описание операционной системы</h3>
+            <p class="text-secondary">
+                Windows 11 Pro — это флагманская операционная система, созданная для эффективной работы, учебы и современных игр. Она предлагает лаконичный дизайн, улучшенную группировку окон Snap Layouts и повышенную производительность в играх благодаря технологиям DirectStorage и Auto HDR.
+            </p>
+            <p class="text-secondary">
+                В редакцию Professional входят профессиональные компоненты защиты и администрирования: встроенное шифрование дисков BitLocker, изолированная среда тестирования Windows Sandbox, гипервизор Hyper-V и возможность удаленного управления ПК через Remote Desktop.
+            </p>
         </div>
 
-        <div class="row g-3">
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm p-4 bg-white rounded-3 text-center">
-                    <div class="fs-2 mb-2">🔒</div>
-                    <h5 class="fw-bold fs-6 mb-2">Шифрование BitLocker</h5>
-                    <p class="text-secondary small mb-0">Полная защита ваших личных файлов и разделов жесткого диска даже в случае кражи или утери накопителя.</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm p-4 bg-white rounded-3 text-center">
-                    <div class="fs-2 mb-2">🖥️</div>
-                    <h5 class="fw-bold fs-6 mb-2">Удаленный рабочий стол</h5>
-                    <p class="text-secondary small mb-0">Полноценный хост Remote Desktop (RDP) для безопасного подключения к вашему ПК из любой точки мира.</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm p-4 bg-white rounded-3 text-center">
-                    <div class="fs-2 mb-2">📦</div>
-                    <h5 class="fw-bold fs-6 mb-2">Песочница Windows Sandbox</h5>
-                    <p class="text-secondary small mb-0">Безопасный изолированный запуск подозрительных программ без риска заражения основной системы вирусами.</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow-sm p-4 bg-white rounded-3 text-center">
-                    <div class="fs-2 mb-2">🚀</div>
-                    <h5 class="fw-bold fs-6 mb-2">Игровая производительность</h5>
-                    <p class="text-secondary small mb-0">Технологии Auto HDR, DirectStorage и улучшенный игровой режим для максимального FPS во всех современных играх.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- системные требования -->
-    <section class="container mb-5" id="specs">
-        <div class="text-center mb-4">
-            <h2 class="h4 fw-bold mb-1">Системные требования</h2>
-            <p class="text-secondary small mb-0">Официальные требования Microsoft для установки Windows 11</p>
-        </div>
-
-        <div class="row g-4">
-            <!-- минимальные -->
-            <div class="col-12 col-md-6">
-                <div class="card h-100 border-0 shadow-sm p-4 bg-white rounded-3">
-                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
-                        <h5 class="fw-bold mb-0">Минимальные требования</h5>
-                        <span class="badge bg-secondary">Базовая установка</span>
-                    </div>
-                    <table class="table table-borderless small mb-0 specs-table">
-                        <tbody>
-                            <tr>
-                                <th>Процессор:</th>
-                                <td>1 ГГц или выше, 2+ ядер на совместимом 64-битном процессоре</td>
-                            </tr>
-                            <tr>
-                                <th>Оперативная память:</th>
-                                <td>4 ГБ ОЗУ</td>
-                            </tr>
-                            <tr>
-                                <th>Место на диске:</th>
-                                <td>От 64 ГБ свободного пространства</td>
-                            </tr>
-                            <tr>
-                                <th>Системная прошивка:</th>
-                                <td>UEFI с поддержкой Secure Boot (безопасной загрузки)</td>
-                            </tr>
-                            <tr>
-                                <th>Модуль безопасности:</th>
-                                <td>TPM версии 2.0 (Trusted Platform Module)</td>
-                            </tr>
-                            <tr>
-                                <th>Видеокарта:</th>
-                                <td>DirectX 12 совместимая с драйвером WDDM 2.0</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- рекомендуемые -->
-            <div class="col-12 col-md-6">
-                <div class="card h-100 border-0 shadow-sm p-4 bg-white rounded-3">
-                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
-                        <h5 class="fw-bold mb-0">Рекомендуемые для Pro-функций</h5>
-                        <span class="badge bg-dark">Комфортная работа / Игры</span>
-                    </div>
-                    <table class="table table-borderless small mb-0 specs-table">
-                        <tbody>
-                            <tr>
-                                <th>Процессор:</th>
-                                <td>Intel Core i5 / AMD Ryzen 5 (8-го поколения и новее)</td>
-                            </tr>
-                            <tr>
-                                <th>Оперативная память:</th>
-                                <td>16 ГБ ОЗУ и более</td>
-                            </tr>
-                            <tr>
-                                <th>Место на диске:</th>
-                                <td>Высокоскоростной SSD NVMe от 256 ГБ</td>
-                            </tr>
-                            <tr>
-                                <th>Дисплей:</th>
-                                <td>Разрешение Full HD (1920x1080) и выше, от 9 дюймов</td>
-                            </tr>
-                            <tr>
-                                <th>Интернет:</th>
-                                <td>Стабильное подключение для обновлений безопасности</td>
-                            </tr>
-                            <tr>
-                                <th>Виртуализация:</th>
-                                <td>Включенная поддержка аппаратной виртуализации (VT-x / AMD-V)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <!-- системные требования -->
+        <div class="mb-5">
+            <h3 class="h4 fw-bold mb-3 border-bottom pb-2">Системные требования для ПК</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm small">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 25%;">Компонент</th>
+                            <th style="width: 37.5%;">Минимальные требования</th>
+                            <th style="width: 37.5%;">Рекомендуемые требования</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Процессор (CPU)</td>
+                            <td>1 ГГц, не менее 2 ядер на 64-битном процессоре</td>
+                            <td>Intel Core i5 / AMD Ryzen 5 (8-е поколение и новее)</td>
+                        </tr>
+                        <tr>
+                            <td>Оперативная память (RAM)</td>
+                            <td>4 ГБ</td>
+                            <td>8 ГБ и более</td>
+                        </tr>
+                        <tr>
+                            <td>Место на накопителе</td>
+                            <td>От 64 ГБ свободного пространства</td>
+                            <td>128 ГБ на высокоскоростном SSD</td>
+                        </tr>
+                        <tr>
+                            <td>Системная прошивка</td>
+                            <td>UEFI с поддержкой Secure Boot</td>
+                            <td>UEFI с поддержкой Secure Boot</td>
+                        </tr>
+                        <tr>
+                            <td>Модуль безопасности</td>
+                            <td>TPM версии 2.0</td>
+                            <td>TPM версии 2.0</td>
+                        </tr>
+                        <tr>
+                            <td>Видеокарта</td>
+                            <td>DirectX 12 совместимая с WDDM 2.0</td>
+                            <td>DirectX 12 совместимая с WDDM 2.0</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </section>
 
-    <!-- инструкция по активации -->
-    <section class="container mb-5" id="activation">
-        <div class="card border-0 shadow-sm p-4 p-md-5 bg-white rounded-3">
-            <h4 class="fw-bold mb-3">Простая активация в 3 шага</h4>
-            <div class="row g-3 text-secondary small">
-                <div class="col-12 col-md-4">
-                    <div class="p-3 bg-light rounded-3 h-100">
-                        <div class="fw-bold text-dark mb-1">Шаг 1. Получите ключ</div>
-                        <p class="mb-0">После оплаты 25-значный лицензионный код продукта отобразится на экране и сохранится в личном кабинете.</p>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="p-3 bg-light rounded-3 h-100">
-                        <div class="fw-bold text-dark mb-1">Шаг 2. Откройте параметры</div>
-                        <p class="mb-0">На компьютере нажмите <strong>Пуск</strong> &rarr; <strong>Параметры</strong> &rarr; <strong>Система</strong> &rarr; <strong>Активация</strong> &rarr; <strong>Изменить ключ продукта</strong>.</p>
-                    </div>
-                </div>
-                <div class="col-12 col-md-4">
-                    <div class="p-3 bg-light rounded-3 h-100">
-                        <div class="fw-bold text-dark mb-1">Шаг 3. Активируйте систему</div>
-                        <p class="mb-0">Вставьте ключ и нажмите «Активировать». Лицензия мгновенно подтвердится на серверах Microsoft и станет бессрочной.</p>
-                    </div>
-                </div>
-            </div>
+        <!-- инструкция по активации -->
+        <div class="card p-3 bg-light border-0">
+            <h5 class="fw-bold mb-2">Как активировать Windows 11 Pro</h5>
+            <ol class="mb-0 small text-secondary ps-3">
+                <li class="mb-1">Оплатите заказ на сайте и скопируйте полученный 25-значный лицензионный ключ продукта.</li>
+                <li class="mb-1">На компьютере откройте меню <strong>Пуск</strong> &rarr; <strong>Параметры</strong> &rarr; <strong>Система</strong> &rarr; <strong>Активация</strong>.</li>
+                <li>Нажмите <strong>«Изменить ключ продукта»</strong>, вставьте ключ и нажмите «Активировать». Лицензия привяжется к системе.</li>
+            </ol>
         </div>
-    </section>
+    </main>
 
-    <!-- модальное окно авторизации и регистрации -->
+    <!-- модальное окно авторизации -->
     <div class="modal fade" id="authModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -384,25 +242,19 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-center p-3">
                 <div class="modal-body">
-                    <div class="mb-3 text-success">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                            <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
-                        </svg>
-                    </div>
                     <h5 class="fw-bold mb-2">Оплата прошла успешно!</h5>
-                    <p class="text-secondary small mb-3" id="issuedKeySubtitle">Ваш цифровой ключ активации Windows 11 Pro:</p>
+                    <p class="text-secondary small mb-3" id="issuedKeySubtitle">Ваш цифровой ключ активации:</p>
                     <div class="p-3 bg-light border rounded font-monospace fw-bold fs-5 text-dark mb-3" id="issuedKey">
                         XXXXX-XXXXX-XXXXX-XXXXX-XXXXX
                     </div>
-                    <p class="text-secondary small">Ключ готов к активации в параметрах системы.</p>
+                    <p class="text-secondary small">Ключ сохранен в личном кабинете в разделе «Мои покупки».</p>
                     <button type="button" class="btn btn-dark btn-sm w-100" data-bs-dismiss="modal">Отлично</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- модальное окно личного кабинета (мои покупки) -->
+    <!-- модальное окно личного кабинета -->
     <div class="modal fade" id="userKeysModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -424,28 +276,20 @@
     </div>
 
     <!-- подвал -->
-    <footer id="contacts" class="bg-white border-top py-5 text-secondary small mt-auto">
+    <footer id="contacts" class="bg-white border-top py-4 text-secondary small mt-auto">
         <div class="container text-center">
             <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
-                <img src="img/ByteStore.png" alt="ByteStore" width="28" height="28" class="rounded-2">
-                <h5 class="fw-bold text-dark mb-0">ByteStore</h5>
+                <img src="img/ByteStore.png" alt="ByteStore" width="24" height="24" class="rounded">
+                <span class="fw-bold text-dark">ByteStore</span>
             </div>
-            <p class="text-secondary mb-3">Официальный магазин лицензионных цифровых ключей</p>
-            <div class="d-inline-flex flex-column flex-sm-row gap-3 text-secondary mb-4">
-                <span>Поддержка: <strong class="text-dark">support@bytestore.local</strong></span>
-                <span>Telegram: <strong class="text-dark">@bytestore_help</strong></span>
-                <span>Режим работы: <strong class="text-dark">24/7</strong></span>
-            </div>
-            <div class="pt-3 border-top text-muted">
-                <p class="mb-0">ByteStore. Учебная практика.</p>
-            </div>
+            <p class="text-secondary mb-2">Учебный проект интернет-магазина цифровых ключей</p>
+            <div class="text-muted">ByteStore &copy; 2026. Практическая работа.</div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="app.js?v=8"></script>
     <script>
-        // обработчик для кнопки "Купить сейчас"
         document.getElementById('buyInstantBtn')?.addEventListener('click', () => {
             addToCart('3', 'Windows 11 Pro', 890);
             const cartModalEl = document.getElementById('cartModal');
