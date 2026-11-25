@@ -187,8 +187,9 @@ def add_key(data: AddKeyData, db: Session = Depends(get_db)):
         "message": f"Ключ успешно добавлен к товару {product.name}"
     }
 
-# раздача картинок товаров
+# раздача статических файлов (изображения и шрифты)
 app.mount("/img", StaticFiles(directory="img"), name="img")
+app.mount("/fonts", StaticFiles(directory="fonts"), name="fonts")
 
 # запуск сервера
 if __name__ == "__main__":
