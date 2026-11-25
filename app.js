@@ -223,6 +223,14 @@ async function handleAuthSubmit(e) {
 
         updateAuthUI();
 
+        if (cart.length > 0) {
+            const cartModalEl = document.getElementById('cartModal');
+            if (cartModalEl) {
+                const cartModal = bootstrap.Modal.getInstance(cartModalEl) || new bootstrap.Modal(cartModalEl);
+                cartModal.show();
+            }
+        }
+
     } catch (err) {
         console.error('Ошибка связи с сервером:', err);
         if (errorBlock) {
@@ -372,24 +380,36 @@ async function loadStock() {
         if (!response.ok) return;
 
         const products = await response.json();
+        const buyInstant = document.getElementById('buyInstantBtn');
+
         products.forEach(p => {
             const stockEl = document.getElementById(`stock-${p.id}`);
             const btn = document.querySelector(`.btn-buy[data-id="${p.id}"]`);
 
             if (stockEl) {
                 if (p.available_keys > 0) {
-                    stockEl.className = 'text-muted small mb-2';
                     stockEl.textContent = `В наличии: ${p.available_keys} шт.`;
+                    if (stockEl.tagName === 'SPAN') {
+                        stockEl.className = 'text-success fw-bold';
+                    } else {
+                        stockEl.className = 'text-muted small mb-2';
+                    }
                     if (btn) {
                         btn.disabled = false;
                         btn.textContent = 'В корзину';
                     }
+                    if (buyInstant && btn && btn.getAttribute('data-id') == p.id) {
+                        buyInstant.disabled = false;
+                    }
                 } else {
-                    stockEl.className = 'text-danger small mb-2';
                     stockEl.textContent = 'Нет в наличии';
+                    stockEl.className = 'text-danger small mb-2 fw-bold';
                     if (btn) {
                         btn.disabled = true;
                         btn.textContent = 'Закончился';
+                    }
+                    if (buyInstant && btn && btn.getAttribute('data-id') == p.id) {
+                        buyInstant.disabled = true;
                     }
                 }
             }
@@ -756,19 +776,6 @@ async function handleCheckout() {
                 issuedKeyEl.classList.remove('fs-6');
                 issuedKeyEl.classList.add('fs-5');
                 issuedKeyEl.textContent = issued[0].key;
-            } else if (issued.length > 1) {
-                issuedKeyEl.classList.remove('fs-5');
-                issuedKeyEl.classList.add('fs-6');
-                issuedKeyEl.innerHTML = issued.map(x =>
-                    `<div class="mb-2 text-start">
-                        <div class="text-secondary small">${x.name}</div>
-                        <div class="font-monospace fw-bold">${x.key}</div>
-                    </div>`
-                ).join('');
-            } else {
-                issuedKeyEl.textContent = '—';
-            }
-        }
             } else if (issued.length > 1) {
                 issuedKeyEl.classList.remove('fs-5');
                 issuedKeyEl.classList.add('fs-6');

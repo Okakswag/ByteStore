@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Windows 11 Pro — Купить ключ | ByteStore</title>
     <link rel="icon" type="image/png" href="img/ByteStore.png">
-    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Satoshi', sans-serif;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background-color: #fff;
             color: #212529;
         }
@@ -275,6 +274,49 @@
         </div>
     </div>
 
+    <!-- модальное окно добавления ключей -->
+    <div class="modal fade" id="adminModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Пополнение склада ключей</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="adminKeyForm">
+                        <div class="mb-3">
+                            <label class="form-label small text-secondary">Выберите товар</label>
+                            <select class="form-select form-select-sm" id="adminProductSelect">
+                                <option value="1">Cyberpunk 2077</option>
+                                <option value="2">Elden Ring</option>
+                                <option value="3" selected>Windows 11 Pro</option>
+                                <option value="4">Grand Theft Auto V</option>
+                                <option value="5">Red Dead Redemption 2</option>
+                                <option value="6">Microsoft Office 2024</option>
+                                <option value="7">The Witcher 3: Wild Hunt</option>
+                                <option value="8">Forza Horizon 6</option>
+                                <option value="9">Hogwarts Legacy</option>
+                                <option value="10">Forza Horizon 5</option>
+                                <option value="11">Adobe Photoshop 2024</option>
+                                <option value="12">Подарочная карта Steam (1000 руб.)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-secondary">Код лицензионного ключа</label>
+                            <div class="input-group input-group-sm">
+                                <input type="text" class="form-control font-monospace" id="adminKeyCode" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+                                <button class="btn btn-outline-secondary" type="button" id="adminGenKeyBtn">Сгенерировать</button>
+                            </div>
+                        </div>
+                        <div id="adminSuccess" class="alert alert-success py-2 small d-none"></div>
+                        <div id="adminError" class="alert alert-danger py-2 small d-none"></div>
+                        <button type="submit" class="btn btn-dark btn-sm w-100" id="adminSubmitBtn">Добавить ключ в базу данных</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- подвал -->
     <footer id="contacts" class="bg-white border-top py-4 text-secondary small mt-auto">
         <div class="container text-center">
@@ -288,7 +330,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="app.js?v=8"></script>
+    <script src="app.js?v=9"></script>
     <script>
         document.getElementById('buyInstantBtn')?.addEventListener('click', () => {
             addToCart('3', 'Windows 11 Pro', 890);
